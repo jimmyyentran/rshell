@@ -11,7 +11,7 @@ class Shell{
     private:
         char hostname[HOST_NAME_MAX];
         char username[LOGIN_NAME_MAX];
-        const int maxInput = 100;
+        static const int MAX_INPUT2 = 100;
 
         void getLoginInfo(){
             if (-1 == gethostname(hostname, HOST_NAME_MAX)){
@@ -34,15 +34,15 @@ class Shell{
         }
 
         void startShell(){
-            char input[MAX_INPUT];
-            std::cout << "Start Shell" << std::endl;
+            char input[MAX_INPUT2];
+            std::cout << "Start Shell!" << std::endl;
             printPrompt();
-            std::cin.getline(input, MAX_INPUT);
-            Parser(input);
-
+            std::cin.getline(input, MAX_INPUT2);
+            std::cout << input;
+            Parser parser = Parser(input);
+            parser.test();
+            // std::cout << "Exiting" << std::endl;;
         }
-
-
 };
 
 #endif
