@@ -34,4 +34,6 @@ void Shell::startShell(){
     printPrompt();
     std::cin.getline(input, MAX_INPUT2);
     Parser parser = Parser(input);
+    parser.test();
+    // std::cout << "Test" << std::endl;
 }

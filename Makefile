@@ -1,27 +1,24 @@
+CC = g++
+CFLAGS = -Wall -Werror -ansi -pedantic
+SRCDIR =  src
+SRC = $(wildcard $(SRCDIR)/*.cpp)
+OBJDIR = bin
+OBJ = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRC))
+HEADERDIR = header
+HEADER = $(wildcard $(SRCDIR)/$(HEADERDIR)/*.h)
 
-SRC=$(filter-out %main.cpp, src/*)
-OBJ=shell.o parser.o
-header=$(wildcard src/header/*.h)
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp ${HEADER}
+	$(CC) $(CFLAGS) -c $< -o $@
 
+all: $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o all
 
-vpath %.cpp src/
+$(OBJ): | $(OBJDIR)
 
-all: $(OBJ) main.cpp
-	g++ -o output_file $^
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)
 
-# test: all
-# ./grid_router Tests/test_sample.json
-
-%.o: %.cpp ${header}
-	g++ -c $^
-
-# car.o:
-# g++ -c car.cpp
-
-cleanup:
-	rm -f output_file
-	rm -f *.o
-
-# clean: cleanup
-#	# rm -f lab2
-
+clean:
+	@echo "Cleaning Up"
+	rm -rf $(OBJDIR)
+	rm -f all
