@@ -1,26 +1,27 @@
-CC = g++
-CFLAGS = -Wall -Werror -ansi -pedantic
-SRC = $(wildcard src/*.cpp)
-OBJDIR = bin
-OBJ = $(patsubst src/%.cpp, $(OBJDIR)/%.o, $(SRC))
 
-# all: $(OBJ)
-	# @echo "Compile all"
-	# $(CC) $(CFLAGS) $(OBJ) -o all
+SRC=$(filter-out %main.cpp, src/*)
+OBJ=shell.o parser.o
+header=$(wildcard src/header/*.h)
 
-$(OBJDIR)/%.o: src/%.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
 
-all: $(OBJ)
-	@echo "Compile all"
-	$(CC) $(CFLAGS) $(OBJ) -o all
+vpath %.cpp src/
 
-$(OBJ): | $(OBJDIR)
+all: $(OBJ) main.cpp
+	g++ -o output_file $^
 
-$(OBJDIR):
-	mkdir -p $(OBJDIR)
+# test: all
+# ./grid_router Tests/test_sample.json
 
-clean:
-	@echo "Cleaning Up"
-	rm -rf $(OBJDIR)
-	rm -f all
+%.o: %.cpp ${header}
+	g++ -c $^
+
+# car.o:
+# g++ -c car.cpp
+
+cleanup:
+	rm -f output_file
+	rm -f *.o
+
+# clean: cleanup
+#	# rm -f lab2
+

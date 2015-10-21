@@ -1,12 +1,10 @@
 #include <iostream>
-#include "shell.cpp"
-using namespace std;
+#include "header/shell.h"
 
 int main(int argc, char* argv[])
 {
     Shell* shell = new Shell();
     shell->startShell();
-    cout << "Hello World!" << endl;
     return 0;
 }
 
