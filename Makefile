@@ -11,12 +11,15 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp ${HEADER}
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o all
+	$(CC) $(CFLAGS) $(OBJ) -o $(OBJDIR)/rshell
 
 $(OBJ): | $(OBJDIR)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
+
+test:
+	./tests/multi_command.sh
 
 clean:
 	@echo "Cleaning Up"

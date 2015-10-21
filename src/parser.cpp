@@ -5,7 +5,7 @@
 #include "header/parser.h"
 
 const char* Parser::EXEC[] = {"ls", "echo", NULL};
-const char Parser::KEYS[] = "$|;";
+const char Parser::KEYS[] = "&|;";
 
 Parser::Parser(char * str){
     char delims[5] = " ";
