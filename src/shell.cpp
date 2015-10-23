@@ -38,7 +38,9 @@ void Shell::startShell(){
 }
 
 void Shell::run() {
-	char* argv[10] = {"ls"};
+	char* argv[10];
+	argv[0] = (char*)"ls";
+	argv[1] = NULL;
 	pid_t child_pid = fork();
 	if(child_pid >= 0){
 		if(child_pid == 0){ // child process
