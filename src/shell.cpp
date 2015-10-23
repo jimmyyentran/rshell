@@ -3,6 +3,8 @@
 #include <cstdio>
 #include "header/shell.h"
 #include "header/parser.h"
+#include "header/runner.h"
+#include "header/command.h"
 #include <sys/wait.h>
 
 Shell::Shell(){
@@ -28,37 +30,23 @@ void Shell::printPrompt(){
 }
 
 void Shell::startShell(){
-    char input[MAX_INPUT2];
+    // char input[MAX_INPUT2];
     std::cout << "Start Shell!" << std::endl;
     printPrompt();
-    // run();
-    std::cin.getline(input, MAX_INPUT2);
-    Parser parser = Parser(input);
-    parser.test();
+    // std::cin.getline(input, MAX_INPUT2);
+    // Parser parser = Parser(input);
+    // parser.test();
+    test();
 }
 
-void Shell::run() {
-    char* argv[10];
-    argv[0] = (char*)"";
-    // argv[1] = (char*)"/bin/";
-    argv[1] = (char*)"-la";
-    argv[2] = NULL;
-    char *command = (char*)"ls";
-    pid_t child_pid = fork();
-    if(child_pid >= 0){
-        if(child_pid == 0){ // child process
-            std::cout << "Child Process " << std::endl;
-            // if (-1 == execvp( *argv , argv)){
-            if (-1 == execvp( command, argv)){
-                perror("Can't execute");
-            }
-        } else { // parent process
-            std::cout << "Parent Process" << std::endl;
-            int status;
-            waitpid( child_pid, &status, 0);
-        }
+void Shell::test(){
+    char *array[10];
+    array[0] = (char*)"ls";
+    array[1] = (char*)"-al";
+    array[2] = NULL;
+    Runner *test =  new Command(array);
+    test->run();
+}
 
-        } else {
-            perror("Forking error");
-        }
-    }
+
+

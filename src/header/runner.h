@@ -5,7 +5,9 @@ class Runner {
     private:
         
     public:
-        virtual bool run(bool) = 0;
-}
+        virtual bool run() = 0;
+        virtual void test(){};
+        virtual ~Runner(){};
+};
 
 #endif

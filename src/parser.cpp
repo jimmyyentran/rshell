@@ -32,7 +32,7 @@ void Parser::parseToken(char* pch){
     // return something
 
     // if ( i == strlen(pch) ){
-        // std::cout << "No conditionals found" << std::endl;
+    // std::cout << "No conditionals found" << std::endl;
     // }
 }
 
