@@ -16,6 +16,7 @@ class Shell{
 
         Shell();
         void startShell();
+        void run();
 };
 
 #endif

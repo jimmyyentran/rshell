@@ -3,6 +3,7 @@
 #include <cstdio>
 #include "header/shell.h"
 #include "header/parser.h"
+#include <sys/wait.h>
 
 Shell::Shell(){
     std::cout << "Shell initiated" << std::endl;
@@ -27,10 +28,31 @@ void Shell::printPrompt(){
 }
 
 void Shell::startShell(){
-    char input[MAX_INPUT2];
+//    char input[MAX_INPUT2];
     std::cout << "Start Shell!" << std::endl;
     printPrompt();
-    std::cin.getline(input, MAX_INPUT2);
-    Parser parser = Parser(input);
-    parser.test();
+    run();
+//    std::cin.getline(input, MAX_INPUT2);
+//    Parser parser = Parser(input);
+//    parser.test();
+}
+
+void Shell::run() {
+	char* argv[10] = {"ls"};
+	pid_t child_pid = fork();
+	if(child_pid >= 0){
+		if(child_pid == 0){ // child process
+			std::cout << "Child Process " << std::endl;
+			if (-1 == execvp( *argv , argv)){
+				perror("Can't execute");
+			}
+		} else { // parent process
+			std::cout << "Parent Process" << std::endl;
+			int status;
+			waitpid( child_pid, &status, 0);
+		}
+
+	} else {
+		perror("Forking error");
+	}
 }

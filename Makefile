@@ -5,6 +5,7 @@ OBJDIR = bin
 HEADERDIR = header
 TESTDIR = tests
 EXECUTABLE = rshell
+CURSHELL = $(SHELL)
 SRC = $(wildcard $(SRCDIR)/*.cpp)
 OBJ = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRC))
 HEADER = $(wildcard $(SRCDIR)/$(HEADERDIR)/*.h)

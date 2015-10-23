@@ -3,6 +3,11 @@ bin/
 all
 rshell
 
+# eclipse files
+.*project
+.settings
+
+
 # Compiled Object files
 *.slo
 *.lo
