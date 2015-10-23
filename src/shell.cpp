@@ -28,13 +28,13 @@ void Shell::printPrompt(){
 }
 
 void Shell::startShell(){
-    //    char input[MAX_INPUT2];
+    char input[MAX_INPUT2];
     std::cout << "Start Shell!" << std::endl;
     printPrompt();
-    run();
-    //    std::cin.getline(input, MAX_INPUT2);
-    //    Parser parser = Parser(input);
-    //    parser.test();
+    // run();
+    std::cin.getline(input, MAX_INPUT2);
+    Parser parser = Parser(input);
+    parser.test();
 }
 
 void Shell::run() {
@@ -58,7 +58,7 @@ void Shell::run() {
             waitpid( child_pid, &status, 0);
         }
 
-    } else {
-        perror("Forking error");
+        } else {
+            perror("Forking error");
+        }
     }
-}

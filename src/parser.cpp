@@ -26,8 +26,9 @@ void Parser::parseToken(char* pch){
     if(scanSupported(substr) >= 0){
         std::cout << "Found matching: " << substr << std::endl;
         // return something
+    } else {
+        std::cout << "No Match for " << substr << std::endl;
     }
-    std::cout << "No Match for " << substr << std::endl;
     // return something
 
     // if ( i == strlen(pch) ){
