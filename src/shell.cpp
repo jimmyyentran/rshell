@@ -35,8 +35,10 @@ void Shell::startShell(){
     printPrompt();
     // std::cin.getline(input, MAX_INPUT2);
     // Parser parser = Parser(input);
-    // parser.test();
-    test();
+    char string[] = "ls -a";
+    Parser parser = Parser(string);
+    parser.test();
+    // test();
 }
 
 void Shell::test(){
