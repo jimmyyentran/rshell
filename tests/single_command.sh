@@ -14,3 +14,4 @@ echo "SINGLE COMMAND TEST"
 echo "------------------"
 
 input "ls -alt"
+input "ls -alt bin"

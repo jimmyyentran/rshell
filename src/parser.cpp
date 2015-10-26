@@ -15,12 +15,7 @@ Parser::Parser(char * str){
         // there is only one command
         char * args[30];
         convertToObj(str, args);
-        std::cout << "testingp: " << args[0] << std::endl;
-        std::cout << "testingp: " << args[1] << std::endl;
         runners.push(new Command(args));
-        std::cout << "pointer: " << &(runners.front()) << std::endl;
-        // char cmd[sizeof(str)];
-        // strcpy( cmd, pch );
     }
 
     // while (pch != NULL){
@@ -29,12 +24,20 @@ Parser::Parser(char * str){
     // }
 }
 
-const std::queue<Runner*>& Parser::getRunners(){
+std::queue<Runner*>& Parser::getRunners() {
     std::cout << "getRunner: " << &runners << std::endl;
     return runners;
 }
 
-Command* Parser::convertToObj(char * str, char** argv){
+void Parser::runRunners(){
+    runners.front()->run();
+
+    //deallocate memory
+    delete runners.front();
+    runners.pop();
+}
+
+void Parser::convertToObj(char * str, char** argv){
     while (*str != '\0'){
         while (*str == ' ' || *str == '\t' || *str == '\n') {
             *str++ = '\0';
@@ -45,23 +48,8 @@ Command* Parser::convertToObj(char * str, char** argv){
         }
     }
     *argv = '\0';
-    return new Command(argv);
 }
 
-
-// Parser::Parser(char * str){
-// char delims[5] = " ";
-// char* pch = strtok (str, delims);
-// // parseToken(pch);
-// std::cout << "pch: " << pch << std::endl;
-// std::cout << "&pch: " << &pch << std::endl;
-// parseTokenSimple(pch);
-// // while (pch != NULL){
-// // // std::cout << &pch << std::endl;
-// // std::cout << pch << std::endl;
-// // pch = strtok(NULL, delims);
-// // }
-// }
 
 void Parser::parseTokenSimple(char * tkn){
     std::cout << "tkn: " << tkn << std::endl;
@@ -112,5 +100,3 @@ int Parser::scanSupported(const char* exec){
 
 void Parser::test(){
 }
-
-// const char* Parser::EXEC[] = {"ls"};

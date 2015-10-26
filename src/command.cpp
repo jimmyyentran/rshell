@@ -2,11 +2,17 @@
 #include <unistd.h>
 #include <cstdio>
 #include <sys/wait.h>
+#include <cstring>
 #include "header/command.h"
 
 Command::Command(char ** cmd){
-    args = cmd;
-    std::cout << "TEST" << std::endl;
+    char ** it = args;
+    while (*cmd != NULL){
+        char *tmp = new char[sizeof(*cmd)];
+        strcpy(tmp, *cmd++);
+        *it++ = tmp;
+    }
+    *it = NULL;
 }
 
 bool Command::run() {
@@ -38,8 +44,16 @@ bool Command::run() {
 }
 
 void Command::test(){
+    std::cout << args << std:: endl;
     std::cout << "command: " << args[0] << std::endl;
-    std::cout << "command: " << args[1] << std::endl;
+    std::cout << "command: " << args[0] << std::endl;
+    std::cout << "command: " << args[0] << std::endl;
 }
 
+Command::~Command(){
+    std::cout << "Command Destructor Called" << std::endl;
+    while (*args != NULL){
+        delete [] *args++;
+    }
+}
 

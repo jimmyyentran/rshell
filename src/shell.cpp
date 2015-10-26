@@ -29,17 +29,11 @@ void Shell::printPrompt(){
 }
 
 void Shell::startShell(){
-    // char input[MAX_INPUT2];
+    char input[MAX_INPUT2];
     printPrompt();
-    // std::cin.getline(input, MAX_INPUT2);
-    // Parser parser = Parser(input);
-    char string[] = "ls -alt";
-    Parser parser = Parser(string);
-    std::queue<Runner*> runners = parser.getRunners();
-    std::cout << "getRunner: " << &runners << std::endl;
-    std::cout << "size: " << runners.size() << std::endl;
-    runShell(runners);
-    // test();
+    std::cin.getline(input, MAX_INPUT2);
+    Parser parser = Parser(input);
+    parser.runRunners();
 }
 
 void Shell::runShell(std::queue<Runner*> runners){

@@ -14,8 +14,3 @@ echo
 echo "MULTI COMMAND TEST"
 echo "------------------"
 input "ls&&"
-input "ls&&ls"
-input "ls;"
-input "ls&&;!"
-input "ls"
-input "lsa@;"

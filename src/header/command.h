@@ -8,6 +8,7 @@ class Command : public Runner{
         char **args;
     public:
         Command(char ** cmd);
+        ~Command();
         bool run();
         void test();
 };
