@@ -15,8 +15,8 @@ class Parser {
         void convertToObj(char*, char**);
         std::queue<Runner*> runners;
     public:
-        Parser();
         Parser(char * str);
+        ~Parser();
         void test();
         std::queue<Runner*>& getRunners();
         void runRunners();

@@ -15,3 +15,6 @@ echo "------------------"
 
 input "ls -alt"
 input "ls -alt bin"
+input "exit"
+input "cd .."
+

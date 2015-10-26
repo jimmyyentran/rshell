@@ -33,5 +33,8 @@ test: $(TEST)
 # compile and test
 ct: all test
 
+run:
+	@./bin/rshell
+
 clean:
 	@rm -rf $(OBJDIR)

@@ -29,11 +29,13 @@ void Shell::printPrompt(){
 }
 
 void Shell::startShell(){
-    char input[MAX_INPUT2];
-    printPrompt();
-    std::cin.getline(input, MAX_INPUT2);
-    Parser parser = Parser(input);
-    parser.runRunners();
+    while(1){
+        char input[MAX_INPUT2];
+        printPrompt();
+        std::cin.getline(input, MAX_INPUT2);
+        Parser parser = Parser(input);
+        parser.runRunners();
+    }
 }
 
 void Shell::runShell(std::queue<Runner*> runners){

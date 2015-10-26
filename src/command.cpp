@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <sys/wait.h>
 #include <cstring>
+#include <cstdlib>
 #include "header/command.h"
 
 Command::Command(char ** cmd){
@@ -13,9 +14,15 @@ Command::Command(char ** cmd){
         *it++ = tmp;
     }
     *it = NULL;
+    test();
 }
 
 bool Command::run() {
+    // if enter exit
+    if(strcmp(args[0], "exit") == 0){
+        exit(0);
+    }
+
     pid_t child_pid = fork();
     if(child_pid >= 0){
         if(child_pid == 0){ // child process
@@ -44,10 +51,11 @@ bool Command::run() {
 }
 
 void Command::test(){
-    std::cout << args << std:: endl;
-    std::cout << "command: " << args[0] << std::endl;
-    std::cout << "command: " << args[0] << std::endl;
-    std::cout << "command: " << args[0] << std::endl;
+    std::cout << "Command Args: "<< std:: endl;
+    char ** it = args;
+    while (*it != NULL){
+        std::cout << *it++ << std::endl;
+    }
 }
 
 Command::~Command(){

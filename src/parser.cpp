@@ -50,6 +50,15 @@ void Parser::convertToObj(char * str, char** argv){
     *argv = '\0';
 }
 
+Parser::~Parser(){
+    std::cout << "Parser Destructor Called" << std::endl;
+    while (!runners.empty()){
+        delete runners.front();
+        std::cout << "POP" << std::endl;
+        runners.pop();
+    }
+}
+
 
 void Parser::parseTokenSimple(char * tkn){
     std::cout << "tkn: " << tkn << std::endl;
