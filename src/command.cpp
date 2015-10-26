@@ -20,6 +20,7 @@ Command::Command(char ** cmd){
 bool Command::run() {
     // if enter exit
     if(strcmp(args[0], "exit") == 0){
+        std::cout << "Exiting!" << std::endl;
         exit(0);
     }
 
@@ -59,7 +60,7 @@ void Command::test(){
 }
 
 Command::~Command(){
-    std::cout << "Command Destructor Called" << std::endl;
+    std::cout << "Command Destructor Called " << std::endl;
     while (*args != NULL){
         delete [] *args++;
     }

@@ -11,10 +11,15 @@ const char Parser::KEYS[] = "&|;";
 
 Parser::Parser(char * str){
     size_t i =  strcspn (str, KEYS);
-    if( i != sizeof(str)) {
-        // there is only one command
+
+    std::cout << "testing" << std::endl;
+    std::cout << str << std::endl;
+    std::cout << sizeof(str) << std::endl;
+    std::cout << i << std::endl;
+    if( i == sizeof(str)) { // there is only one command
         char * args[30];
         convertToObj(str, args);
+        // std::cout << args[0] << std::endl;
         runners.push(new Command(args));
     }
 

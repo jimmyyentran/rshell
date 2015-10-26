@@ -33,6 +33,14 @@ void Shell::startShell(){
         char input[MAX_INPUT2];
         printPrompt();
         std::cin.getline(input, MAX_INPUT2);
+
+        // if empty input
+        if(*input == '\0'){
+            continue;
+        }
+
+        std::cout << input << std::endl;
+
         Parser parser = Parser(input);
         parser.runRunners();
     }
