@@ -8,7 +8,6 @@
 #include <sys/wait.h>
 
 Shell::Shell(){
-    std::cout << "Shell initiated" << std::endl;
     getLoginInfo();
     // startShell();
 }
@@ -31,14 +30,22 @@ void Shell::printPrompt(){
 
 void Shell::startShell(){
     // char input[MAX_INPUT2];
-    std::cout << "Start Shell!" << std::endl;
     printPrompt();
     // std::cin.getline(input, MAX_INPUT2);
     // Parser parser = Parser(input);
-    char string[] = "ls -a";
+    char string[] = "ls -alt";
     Parser parser = Parser(string);
-    parser.test();
+    std::queue<Runner*> runners = parser.getRunners();
+    std::cout << "getRunner: " << &runners << std::endl;
+    std::cout << "size: " << runners.size() << std::endl;
+    runShell(runners);
     // test();
+}
+
+void Shell::runShell(std::queue<Runner*> runners){
+    std::cout << "pointer: " << &(runners.front()) << std::endl;
+    runners.front()->test();
+    // runners.front()->run();
 }
 
 void Shell::test(){

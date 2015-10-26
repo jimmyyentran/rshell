@@ -2,6 +2,8 @@
 #define _SHELL_
 
 #include <limits.h>
+#include <queue>
+#include "runner.h"
 
 class Shell{
     private:
@@ -10,6 +12,7 @@ class Shell{
 
         void getLoginInfo();
         void printPrompt();
+        void runShell(std::queue<Runner*> runners);
 
     public:
         static const int MAX_INPUT2 = 100;

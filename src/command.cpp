@@ -6,6 +6,7 @@
 
 Command::Command(char ** cmd){
     args = cmd;
+    std::cout << "TEST" << std::endl;
 }
 
 bool Command::run() {
@@ -36,6 +37,9 @@ bool Command::run() {
     return true;
 }
 
-void Command::test(){}
+void Command::test(){
+    std::cout << "command: " << args[0] << std::endl;
+    std::cout << "command: " << args[1] << std::endl;
+}
 
 
