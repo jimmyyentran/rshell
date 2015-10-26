@@ -10,16 +10,15 @@ const char* Parser::EXEC[] = {"ls", "echo", NULL};
 const char Parser::KEYS[] = "&|;";
 
 Parser::Parser(char * str){
+    std::queue<Runner*> empty;
+    std::swap( runners, empty );
     size_t i =  strcspn (str, KEYS);
-
-    std::cout << "testing" << std::endl;
-    std::cout << str << std::endl;
-    std::cout << sizeof(str) << std::endl;
-    std::cout << i << std::endl;
-    if( i == sizeof(str)) { // there is only one command
+    if ( str[i] == '\0' ){
+        std::cout << "Only one Command" << std::endl;
         char * args[30];
         convertToObj(str, args);
-        // std::cout << args[0] << std::endl;
+        std::cout << &runners << std::endl;
+        std::cout << runners.size() << std::endl;
         runners.push(new Command(args));
     }
 

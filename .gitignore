@@ -7,6 +7,8 @@ rshell
 .*project
 .settings
 
+# vim sess files
+.vim
 
 # Compiled Object files
 *.slo

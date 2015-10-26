@@ -39,8 +39,6 @@ void Shell::startShell(){
             continue;
         }
 
-        std::cout << input << std::endl;
-
         Parser parser = Parser(input);
         parser.runRunners();
     }
