@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Werror -ansi -pedantic
+CFLAGS = -Wall -Werror -ansi -pedantic -g
 # CTEST = -Wall -ansi -pedantic
 SRCDIR =  src
 OBJDIR = bin
@@ -16,8 +16,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	#1
 	$(CC) $(CFLAGS) -c $< -o $@
 
-all: $(OBJ)
-	#2
+all: clean $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(OBJDIR)/$(EXECUTABLE)
 
 $(OBJ): | $(OBJDIR)

@@ -30,7 +30,7 @@ void Shell::printPrompt(){
 
 void Shell::startShell(){
     while(1){
-        char input[MAX_INPUT2];
+        char *input =  new char[MAX_INPUT2];
         printPrompt();
         std::cin.getline(input, MAX_INPUT2);
 
@@ -39,8 +39,11 @@ void Shell::startShell(){
             continue;
         }
 
-        Parser parser = Parser(input);
-        parser.runRunners();
+        Parser* parser = new Parser(input);
+        parser->runRunners();
+        // Parser parser = Parser(input);
+        // parser.runRunners();
+        // delete parser;
     }
 }
 

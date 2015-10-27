@@ -13,7 +13,7 @@ class Parser {
         int scanSupported(const char* exec);
         // Command* convertToObj(char*);
         void convertToObj(char*, char**);
-        std::queue<Runner*> runners;
+        // std::queue<Runner*> runners;
     public:
         Parser(char * str);
         ~Parser();

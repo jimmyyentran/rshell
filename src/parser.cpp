@@ -10,35 +10,34 @@ const char* Parser::EXEC[] = {"ls", "echo", NULL};
 const char Parser::KEYS[] = "&|;";
 
 Parser::Parser(char * str){
-    std::queue<Runner*> empty;
-    std::swap( runners, empty );
+    std::cout << "test" << std::endl;
+    // std::queue<Runner*>* runners = new std::queue<Runner*>;
+    // std::vector<Runner*>* runners = new std::vector<Runner*>;
+    std::vector<Runner*> runners;
     size_t i =  strcspn (str, KEYS);
     if ( str[i] == '\0' ){
         std::cout << "Only one Command" << std::endl;
         char * args[30];
         convertToObj(str, args);
-        std::cout << &runners << std::endl;
-        std::cout << runners.size() << std::endl;
-        runners.push(new Command(args));
+        // runners->push_back(new Command(args));
+        runners.push_back(new Command(args));
     }
-
-    // while (pch != NULL){
-    // // found key
-    // std::cout << "Found delim" << std::endl;
-    // }
+    // runners->front()->run();
+    runners.front()->run();
 }
 
-std::queue<Runner*>& Parser::getRunners() {
-    std::cout << "getRunner: " << &runners << std::endl;
-    return runners;
-}
+// std::queue<Runner*>& Parser::getRunners() {
+    // // std::cout << "getRunner: " << &runners << std::endl;
+    // // return runners;
+    // // ret
+// }
 
 void Parser::runRunners(){
-    runners.front()->run();
+    // runners.front()->run();
 
-    //deallocate memory
-    delete runners.front();
-    runners.pop();
+    // //deallocate memory
+    // delete runners.front();
+    // runners.pop();
 }
 
 void Parser::convertToObj(char * str, char** argv){
@@ -56,11 +55,11 @@ void Parser::convertToObj(char * str, char** argv){
 
 Parser::~Parser(){
     std::cout << "Parser Destructor Called" << std::endl;
-    while (!runners.empty()){
-        delete runners.front();
-        std::cout << "POP" << std::endl;
-        runners.pop();
-    }
+    // while (!runners.empty()){
+        // delete runners.front();
+        // std::cout << "POP" << std::endl;
+        // runners.pop();
+    // }
 }
 
 

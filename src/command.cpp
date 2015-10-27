@@ -7,14 +7,7 @@
 #include "header/command.h"
 
 Command::Command(char ** cmd){
-    char ** it = args;
-    while (*cmd != NULL){
-        char *tmp = new char[sizeof(*cmd)];
-        strcpy(tmp, *cmd++);
-        *it++ = tmp;
-    }
-    *it = NULL;
-    test();
+    args = cmd;
 }
 
 bool Command::run() {
@@ -25,21 +18,24 @@ bool Command::run() {
     }
 
     pid_t child_pid = fork();
+    pid_t pid;
+    int status;
     if(child_pid >= 0){
         if(child_pid == 0){ // child process
             std::cout << "Child Process " << std::endl;
+            pid = getpid();
+            printf("Child: %d\n", pid);
             if (-1 == execvp( *args, args)){
                 perror("Can't execute");
-                std::cout << "Child return false" << std::endl;
-                return false;
+                exit(1);
             }
-            std::cout << "Child return true" << std::endl;
-            return true;
         }else{ // parent process
             std::cout << "Parent Process" << std::endl;
-            int status;
-            waitpid( child_pid, &status, 0);
-            std::cout << "Parent return true" << std::endl;
+            pid = wait(&status);
+            if (WIFEXITED(status)){
+                printf("Parent: Child exited with status %d\n", WEXITSTATUS(status));
+            }
+            // waitpid( child_pid, &status, 0);
             return true;
         }
     }else{
