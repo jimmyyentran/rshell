@@ -2,10 +2,10 @@ let SessionLoad = 1
 if &cp | set nocp | endif
 let s:cpo_save=&cpo
 set cpo&vim
-inoremap <C-Space> 
-imap <Nul> <C-Space>
-inoremap <expr> <Up> pumvisible() ? "\" : "\<Up>"
 inoremap <expr> <Down> pumvisible() ? "\" : "\<Down>"
+inoremap <expr> <Up> pumvisible() ? "\" : "\<Up>"
+imap <Nul> <C-Space>
+inoremap <C-Space> 
 inoremap <silent> <Plug>NERDCommenterInsert  <BS>:call NERDComment('i', "insert")
 inoremap <silent> <expr> <Plug>delimitMateS-BS delimitMate#WithinEmptyPair() ? "\<Del>" : "\<S-BS>"
 inoremap <silent> <Plug>delimitMateBS =delimitMate#BS()
@@ -21,11 +21,11 @@ onoremap  :CtrlP /home/jt/Java/
 vnoremap  :update
 nnoremap <silent>  :update
 map  <Plug>NERDCommenterToggle
-vnoremap  f mzgg=G`z
+onoremap  f mzgg=G`z
 nnoremap  d :YcmShowDetailedDiagnostic
+vnoremap  f mzgg=G`z
 nnoremap  f mzgg=G`z
 noremap  cp :!make
-onoremap  f mzgg=G`z
 map  n <Plug>NERDTreeTabsToggle
 nnoremap  r :RunInInteractiveShell 
 nnoremap    
@@ -110,6 +110,7 @@ set hlsearch
 set incsearch
 set laststatus=2
 set listchars=tab:»·,trail:·,nbsp:·
+set omnifunc=youcompleteme#OmniComplete
 set pastetoggle=<F2>
 set printoptions=paper:letter
 set ruler
@@ -139,17 +140,18 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +18 src/parser.cpp
-badd +39 src/shell.cpp
+badd +35 src/parser.cpp
+badd +53 src/shell.cpp
 badd +1 src/main.cpp
 badd +1 src/command.cpp
-badd +1 src/header/command.h
+badd +12 src/header/command.h
 badd +1 src/header/shell.h
 badd +1 src/header/parser.h
 badd +17 tests/single_command.sh
-badd +7 src/connector.cpp
+badd +10 src/connector.cpp
 badd +4 src/header/connector.h
-badd +0 src/header/runner.h
+badd +8 src/header/runner.h
+badd +0 src/connectorsList.cpp
 args src/parser.cpp
 edit src/parser.cpp
 set splitbelow splitright
@@ -159,8 +161,8 @@ vsplit
 wincmd w
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 91 + 91) / 182)
-exe 'vert 2resize ' . ((&columns * 90 + 91) / 182)
+exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
 argglobal
 let s:cpo_save=&cpo
 set cpo&vim
@@ -251,7 +253,7 @@ setlocal nrformats=octal,hex
 set number
 setlocal number
 setlocal numberwidth=4
-setlocal omnifunc=
+setlocal omnifunc=youcompleteme#OmniComplete
 setlocal path=
 setlocal nopreserveindent
 setlocal nopreviewwindow
@@ -285,12 +287,12 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 25 - ((24 * winheight(0) + 31) / 63)
+let s:l = 39 - ((38 * winheight(0) + 33) / 67)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-25
-normal! 04|
+39
+normal! 05|
 wincmd w
 argglobal
 edit src/header/parser.h
@@ -383,7 +385,7 @@ setlocal nrformats=octal,hex
 set number
 setlocal number
 setlocal numberwidth=4
-setlocal omnifunc=
+setlocal omnifunc=youcompleteme#OmniComplete
 setlocal path=
 setlocal nopreserveindent
 setlocal nopreviewwindow
@@ -417,15 +419,15 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 15 - ((14 * winheight(0) + 31) / 63)
+let s:l = 15 - ((14 * winheight(0) + 33) / 67)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 15
-normal! 05|
+normal! 020|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 91 + 91) / 182)
-exe 'vert 2resize ' . ((&columns * 90 + 91) / 182)
+exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
 tabedit src/shell.cpp
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -434,8 +436,8 @@ vsplit
 wincmd w
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 91 + 91) / 182)
-exe 'vert 2resize ' . ((&columns * 90 + 91) / 182)
+exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
 argglobal
 let s:cpo_save=&cpo
 set cpo&vim
@@ -526,7 +528,7 @@ setlocal nrformats=octal,hex
 set number
 setlocal number
 setlocal numberwidth=4
-setlocal omnifunc=
+setlocal omnifunc=youcompleteme#OmniComplete
 setlocal path=
 setlocal nopreserveindent
 setlocal nopreviewwindow
@@ -560,12 +562,12 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 41 - ((40 * winheight(0) + 31) / 63)
+let s:l = 53 - ((52 * winheight(0) + 33) / 67)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-41
-normal! 09|
+53
+normal! 0
 wincmd w
 argglobal
 edit src/header/shell.h
@@ -692,15 +694,15 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 1 - ((0 * winheight(0) + 31) / 63)
+let s:l = 1 - ((0 * winheight(0) + 33) / 67)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 1
 normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 91 + 91) / 182)
-exe 'vert 2resize ' . ((&columns * 90 + 91) / 182)
+exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
 tabedit src/command.cpp
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -709,8 +711,8 @@ vsplit
 wincmd w
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 91 + 91) / 182)
-exe 'vert 2resize ' . ((&columns * 90 + 91) / 182)
+exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
 argglobal
 let s:cpo_save=&cpo
 set cpo&vim
@@ -801,7 +803,7 @@ setlocal nrformats=octal,hex
 set number
 setlocal number
 setlocal numberwidth=4
-setlocal omnifunc=ccomplete#Complete
+setlocal omnifunc=youcompleteme#OmniComplete
 setlocal path=
 setlocal nopreserveindent
 setlocal nopreviewwindow
@@ -835,12 +837,12 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 54 - ((53 * winheight(0) + 31) / 63)
+let s:l = 13 - ((12 * winheight(0) + 33) / 67)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-54
-normal! 012|
+13
+normal! 024|
 wincmd w
 argglobal
 edit src/header/command.h
@@ -967,15 +969,15 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 1 - ((0 * winheight(0) + 31) / 63)
+let s:l = 12 - ((11 * winheight(0) + 33) / 67)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 0
+12
+normal! 021|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 91 + 91) / 182)
-exe 'vert 2resize ' . ((&columns * 90 + 91) / 182)
+exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
 tabedit src/connector.cpp
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -984,8 +986,8 @@ vsplit
 wincmd w
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 91 + 91) / 182)
-exe 'vert 2resize ' . ((&columns * 90 + 91) / 182)
+exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
 argglobal
 let s:cpo_save=&cpo
 set cpo&vim
@@ -1076,7 +1078,7 @@ setlocal nrformats=octal,hex
 set number
 setlocal number
 setlocal numberwidth=4
-setlocal omnifunc=ccomplete#Complete
+setlocal omnifunc=youcompleteme#OmniComplete
 setlocal path=
 setlocal nopreserveindent
 setlocal nopreviewwindow
@@ -1110,12 +1112,12 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 4 - ((3 * winheight(0) + 31) / 63)
+let s:l = 13 - ((12 * winheight(0) + 33) / 67)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-4
-normal! 013|
+13
+normal! 08|
 wincmd w
 argglobal
 edit src/header/connector.h
@@ -1208,7 +1210,7 @@ setlocal nrformats=octal,hex
 set number
 setlocal number
 setlocal numberwidth=4
-setlocal omnifunc=ccomplete#Complete
+setlocal omnifunc=youcompleteme#OmniComplete
 setlocal path=
 setlocal nopreserveindent
 setlocal nopreviewwindow
@@ -1242,15 +1244,15 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 10 - ((9 * winheight(0) + 31) / 63)
+let s:l = 14 - ((13 * winheight(0) + 33) / 67)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-10
-normal! 024|
+14
+normal! 021|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 91 + 91) / 182)
-exe 'vert 2resize ' . ((&columns * 90 + 91) / 182)
+exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
 tabedit src/header/runner.h
 set splitbelow splitright
 wincmd t
@@ -1345,7 +1347,7 @@ setlocal nrformats=octal,hex
 set number
 setlocal number
 setlocal numberwidth=4
-setlocal omnifunc=ccomplete#Complete
+setlocal omnifunc=youcompleteme#OmniComplete
 setlocal path=
 setlocal nopreserveindent
 setlocal nopreviewwindow
@@ -1379,12 +1381,146 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 9 - ((8 * winheight(0) + 31) / 63)
+let s:l = 10 - ((9 * winheight(0) + 33) / 67)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-9
-normal! 029|
+10
+normal! 028|
+tabedit src/connectorsList.cpp
+set splitbelow splitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+let s:cpo_save=&cpo
+set cpo&vim
+imap <buffer> <S-BS> <Plug>delimitMateS-BS
+imap <buffer> <BS> <Plug>delimitMateBS
+imap <buffer> <silent> g <Plug>delimitMateJumpMany
+imap <buffer>  <Plug>delimitMateBS
+imap <buffer>  <Plug>delimitMateCR
+imap <buffer>   <Plug>delimitMateSpace
+imap <buffer> " <Plug>delimitMate"
+imap <buffer> ' <Plug>delimitMate'
+imap <buffer> ( <Plug>delimitMate(
+imap <buffer> ) <Plug>delimitMate)
+imap <buffer> [ <Plug>delimitMate[
+imap <buffer> ] <Plug>delimitMate]
+imap <buffer> ` <Plug>delimitMate`
+imap <buffer> { <Plug>delimitMate{
+imap <buffer> } <Plug>delimitMate}
+let &cpo=s:cpo_save
+unlet s:cpo_save
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal cindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+set colorcolumn=+1
+setlocal colorcolumn=+1
+setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i,kspell
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=youcompleteme#Complete
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal expandtab
+if &filetype != 'cpp'
+setlocal filetype=cpp
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+set foldmethod=marker
+setlocal foldmethod=marker
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=croql
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+set list
+setlocal list
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+set number
+setlocal number
+setlocal numberwidth=4
+setlocal omnifunc=youcompleteme#OmniComplete
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=~/.vim-spell-en.utf-8.add
+setlocal spelllang=en
+setlocal statusline=%!airline#statusline(1)
+setlocal suffixesadd=
+setlocal noswapfile
+setlocal synmaxcol=3000
+if &syntax != 'cpp'
+setlocal syntax=cpp
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=80
+setlocal thesaurus=
+setlocal noundofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+let s:l = 15 - ((14 * winheight(0) + 33) / 67)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+15
+normal! 055|
 tabedit src/main.cpp
 set splitbelow splitright
 wincmd t
@@ -1513,7 +1649,7 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 1 - ((0 * winheight(0) + 31) / 63)
+let s:l = 1 - ((0 * winheight(0) + 33) / 67)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -1647,7 +1783,7 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 17 - ((15 * winheight(0) + 31) / 63)
+let s:l = 17 - ((16 * winheight(0) + 33) / 67)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt

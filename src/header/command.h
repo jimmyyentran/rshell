@@ -9,7 +9,7 @@ class Command : public Runner{
     public:
         Command(char ** cmd);
         ~Command();
-        bool run();
+        bool run(bool);
         void test();
 };
 

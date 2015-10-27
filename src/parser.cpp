@@ -3,26 +3,45 @@
 #include <cstring>
 #include <vector>
 #include <queue>
+#include "connectorsList.cpp"
 #include "header/runner.h"
 #include "header/parser.h"
 
-const char Parser::KEYS[] = "&|;";
+const char Parser::KEYS[] = "&|;#";
 
 Parser::Parser(char * str){
+    std::cout << "str: " << str << std::endl;
+    char * stepper = str;
     size_t i =  strcspn (str, KEYS);
 
     // single command
     if ( str[i] == '\0' ){
-        // char * args[30];
-        // char* args[30] = new char[30];
-        // char * args[30] = new char[30];
-        char ** args = new char*[30];
-        convertToObj(str, args);
-        runners.push_back(new Command(args));
+        runners.push_back(convertToCommand(str));
     }
 
     // multi command
-    
+    stepper = &(str[i]);
+    std::cout << "stepper: " << stepper << std::endl;
+}
+
+Connector* Parser::convertToConnector(char * str){
+    if(*str == '&'){
+        if(*(++str) == '&'){
+            //make & connector
+            return new AndConnector();
+        }
+    } else if (*str == '|'){
+        if(*(++str) == '|'){
+            //make || connector
+            return new OrConnector();
+        }
+    } else if (*str == ';'){
+        // make ; connector
+        return new SemicolonConnector();
+    } else { // equals to # comment
+        // make # connector
+    }
+    return NULL;
 }
 
 std::vector<Runner*>& Parser::getRunners(){
@@ -30,11 +49,18 @@ std::vector<Runner*>& Parser::getRunners(){
 }
 
 void Parser::runRunners(){
-    runners.front()->run();
+    runners.front()->run(true);
     delete runners.front();
 }
 
-void Parser::convertToObj(char * str, char** argv){
+// str returns from shell and will go out of scope...should new a new char
+Command* Parser::convertToCommand(char * str){
+    char ** argv = new char*[30];
+    parseArgs(str, argv);
+    return new Command(argv);
+}
+
+void Parser::parseArgs(char * str, char** argv){
     while (*str != '\0'){
         while (*str == ' ' || *str == '\t' || *str == '\n') {
             *str++ = '\0';

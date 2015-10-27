@@ -39,6 +39,7 @@ void Shell::startShell(){
 
         Parser* parser = new Parser(input);
         parser->runRunners();
+        // parser->test();
     }
 }
 
@@ -49,12 +50,6 @@ void Shell::runShell(std::queue<Runner*> runners){
 }
 
 void Shell::test(){
-    char *array[10];
-    array[0] = (char*)"ls";
-    array[1] = (char*)"-al";
-    array[2] = NULL;
-    Runner *test =  new Command(array);
-    test->run();
 }
 
 
