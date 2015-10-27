@@ -51,8 +51,6 @@ void Command::test(){
 
 Command::~Command(){
     std::cout << "Command Destructor Called " << std::endl;
-    while (*args != NULL){
-        delete [] *args++;
-    }
+    delete args[30];
 }
 

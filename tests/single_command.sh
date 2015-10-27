@@ -11,9 +11,8 @@ echo "------------------"
     echo "ls -a"
     echo "ls -a bin/ src/"
     echo "git status"
-    echo "testing"
     echo "lscpu"
     echo "lscpu "
     echo "exit"
 
-} | $EXECUTABLE | tee >(cat) >(grep "Parent")
+} | $EXECUTABLE | tee >(cat) >(grep "Parent" | cat)

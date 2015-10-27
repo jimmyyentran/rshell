@@ -9,31 +9,28 @@
 const char Parser::KEYS[] = "&|;";
 
 Parser::Parser(char * str){
-    std::vector<Runner*> runners;
     size_t i =  strcspn (str, KEYS);
+
+    // single command
     if ( str[i] == '\0' ){
-        char * args[30];
+        // char * args[30];
+        // char* args[30] = new char[30];
+        // char * args[30] = new char[30];
+        char ** args = new char*[30];
         convertToObj(str, args);
         runners.push_back(new Command(args));
     }
 
-
-
-    runners.front()->run();
+    // multi command
 }
 
-// std::queue<Runner*>& Parser::getRunners() {
-    // // std::cout << "getRunner: " << &runners << std::endl;
-    // // return runners;
-    // // ret
-// }
+std::vector<Runner*>& Parser::getRunners(){
+    return runners;
+}
 
 void Parser::runRunners(){
-    // runners.front()->run();
-
-    // //deallocate memory
-    // delete runners.front();
-    // runners.pop();
+    runners.front()->run();
+    delete runners.front();
 }
 
 void Parser::convertToObj(char * str, char** argv){
@@ -50,12 +47,7 @@ void Parser::convertToObj(char * str, char** argv){
 }
 
 Parser::~Parser(){
-    std::cout << "Parser Destructor Called" << std::endl;
-    // while (!runners.empty()){
-        // delete runners.front();
-        // std::cout << "POP" << std::endl;
-        // runners.pop();
-    // }
+    // std::cout << "Parser Destructor Called" << std::endl;
 }
 
 
@@ -85,10 +77,10 @@ void Parser::parseToken(char* pch){
     // char substr[100];
     // strncpy (substr, pch, i);
     // if(scanSupported(substr) >= 0){
-        // std::cout << "Found matching: " << substr << std::endl;
-        // // return something
+    // std::cout << "Found matching: " << substr << std::endl;
+    // // return something
     // } else {
-        // std::cout << "No Match for " << substr << std::endl;
+    // std::cout << "No Match for " << substr << std::endl;
     // }
     // return something
 
