@@ -6,23 +6,19 @@
 #include "header/runner.h"
 #include "header/parser.h"
 
-const char* Parser::EXEC[] = {"ls", "echo", NULL};
 const char Parser::KEYS[] = "&|;";
 
 Parser::Parser(char * str){
-    std::cout << "test" << std::endl;
-    // std::queue<Runner*>* runners = new std::queue<Runner*>;
-    // std::vector<Runner*>* runners = new std::vector<Runner*>;
     std::vector<Runner*> runners;
     size_t i =  strcspn (str, KEYS);
     if ( str[i] == '\0' ){
-        std::cout << "Only one Command" << std::endl;
         char * args[30];
         convertToObj(str, args);
-        // runners->push_back(new Command(args));
         runners.push_back(new Command(args));
     }
-    // runners->front()->run();
+
+
+
     runners.front()->run();
 }
 
@@ -83,31 +79,22 @@ void Parser::parseTokenSimple(char * tkn){
 // }
 
 void Parser::parseToken(char* pch){
-    std::cout << pch << std::endl;
-    int i = strcspn (pch, KEYS);
-    std::cout << "find at pos: " << i << std::endl;
-    char substr[100];
-    strncpy (substr, pch, i);
-    if(scanSupported(substr) >= 0){
-        std::cout << "Found matching: " << substr << std::endl;
-        // return something
-    } else {
-        std::cout << "No Match for " << substr << std::endl;
-    }
+    // std::cout << pch << std::endl;
+    // int i = strcspn (pch, KEYS);
+    // std::cout << "find at pos: " << i << std::endl;
+    // char substr[100];
+    // strncpy (substr, pch, i);
+    // if(scanSupported(substr) >= 0){
+        // std::cout << "Found matching: " << substr << std::endl;
+        // // return something
+    // } else {
+        // std::cout << "No Match for " << substr << std::endl;
+    // }
     // return something
 
     // if ( i == strlen(pch) ){
     // std::cout << "No conditionals found" << std::endl;
     // }
-}
-
-int Parser::scanSupported(const char* exec){
-    for (unsigned i = 0; EXEC[i] != NULL; ++i){
-        if(strcmp (exec, EXEC[i]) == 0){
-            return i;
-        }
-    }
-    return -1;
 }
 
 void Parser::test(){

@@ -16,9 +16,6 @@ void Shell::getLoginInfo(){
     if (-1 == gethostname(hostname, HOST_NAME_MAX)){
         perror("Get host failed");
     }
-    // username = getlogin();
-    // perror ("getlogin() error");
-    // if (username == NULL)
     if (-1 == getlogin_r(username, LOGIN_NAME_MAX)){
         perror("Get login failed");
     }
@@ -41,8 +38,6 @@ void Shell::startShell(){
 
         Parser* parser = new Parser(input);
         parser->runRunners();
-        // Parser parser = Parser(input);
-        // parser.runRunners();
         // delete parser;
     }
 }

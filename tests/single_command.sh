@@ -3,15 +3,17 @@
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 EXECUTABLE="$(dirname "$BASEDIR")/bin/rshell"
 
-input () {
-    $EXECUTABLE << EOF
-    $1
-EOF
-echo
-}
-
 echo "SINGLE COMMAND TEST"
 echo "------------------"
+{
+    echo "ls "
+    echo "ls ."
+    echo "ls -a"
+    echo "ls -a bin/ src/"
+    echo "git status"
+    echo "testing"
+    echo "lscpu"
+    echo "lscpu "
+    echo "exit"
 
-input "ls -alt /bin"
-
+} | $EXECUTABLE | tee >(cat) >(grep "Parent")
