@@ -3,45 +3,75 @@
 #include <cstring>
 #include <vector>
 #include <queue>
+#include <cstdlib>
 #include "connectorsList.cpp"
 #include "header/runner.h"
 #include "header/parser.h"
 
 const char Parser::KEYS[] = "&|;#";
 
-Parser::Parser(char * str){
-    std::cout << "str: " << str << std::endl;
-    char * stepper = str;
-    size_t i =  strcspn (str, KEYS);
-
-    // single command
-    if ( str[i] == '\0' ){
-        runners.push_back(convertToCommand(str));
+Parser::Parser(char * stepper){
+    // char * stepper = str;
+    // stepper = str;
+    std::cout << stepper << std::endl;
+    size_t i = strcspn(stepper, KEYS);
+    while (stepper[i] != '\0'){
+        char * command = new char[30];
+        strncpy(command, stepper, i);
+        runners.push_back(convertToCommand(command));
+        stepper = &(stepper[i]);
+        switch (*stepper++){
+            case '&':
+                if(*stepper++ == '&'){
+                    runners.push_back(convertToConnector((char*)"&&"));
+                } else {
+                    std::cout << "Parse error single & not supported" << std::endl;
+                    return;
+                }
+                break;
+            case '|':
+                if(*stepper++ == '|'){
+                    runners.push_back(convertToConnector((char*)"||"));
+                } else {
+                    std::cout << "Parse error single | not supported" << std::endl;
+                    return;
+                }
+                break;
+            case ';':
+                runners.push_back(convertToConnector((char*)";"));
+                break;
+            case '#':
+                return;
+            default:
+                std::cout << "Internal eror" << std::endl;
+                exit(1);
+                break;
+        }
+        if(*stepper == '\0'){ // connector at end
+            printf("%s\n", "end of string");
+            return;
+        }
+        i = strcspn(stepper, KEYS);
     }
-
-    // multi command
-    stepper = &(str[i]);
-    if (*stepper == '&' && *(++stepper) == '&') {
-        std::cout << "There's an &&" << std::endl;
-    } else if (*stepper == '|' && *(++stepper) == '|'){
-        std::cout << "There's an ||" << std::endl;
-    } else if (*stepper == ';'){
-        std::cout << "There's an ;" << std::endl;
-    } else {
-        std::cout << "Parse error at " << stepper << std::endl;
-    }
+    char* command = new char[30];
+    strcpy(command, stepper);
+    runners.push_back(convertToCommand(command));
 }
 
-Connector* Parser::convertToConnector(char * str){
-    if(str == "&&"){
+Connector* Parser::convertToConnector(const char * str){
+    if(strcmp(str, "&&") == 0){
+        // printf("%s\n", "And");
         return new AndConnector();
-    } else if (str == "||"){
+    } else if (strcmp(str, "||") == 0){
+        // printf("%s\n", "Or");
         return new OrConnector();
-    } else if (str == ";"){
+    } else if (strcmp(str, ";") == 0){
+        // printf("%s\n", "Semi");
         return new SemicolonConnector();
     } else { // # pound
 
     }
+    printf("%s\n", "error");
     return NULL;
 }
 
@@ -50,8 +80,11 @@ std::vector<Runner*>& Parser::getRunners(){
 }
 
 void Parser::runRunners(){
-    runners.front()->run(true);
-    delete runners.front();
+    for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {
+        (*it)->run(true);
+        exit(1);
+        // delete runners.front();
+    }
 }
 
 // str returns from shell and will go out of scope...should new a new char
@@ -61,12 +94,16 @@ Command* Parser::convertToCommand(char * str){
     return new Command(argv);
 }
 
+// TODO:should be const str
 void Parser::parseArgs(char * str, char** argv){
     while (*str != '\0'){
         while (*str == ' ' || *str == '\t' || *str == '\n') {
             *str++ = '\0';
         }
-        *argv++ = str;
+        if(*str != '\0'){ // don't add null elements
+            *argv++ = str;
+        }
+        // *argv++ = str;
         while (*str != '\0' && *str != ' ' && *str != '\t' && *str != '\n'){
             str++;
         }
@@ -87,35 +124,9 @@ void Parser::parseTokenSimple(char * tkn){
     std::cout << "&tkn: "<< &tkn << std::endl;
 }
 
-
-// Parser::Parser(char * str){
-// char delims[5] = " ";
-// char* pch = strtok (str, delims);
-// parseToken(pch);
-// while (pch != NULL){
-// printf ("%s\n", pch);
-// pch = strtok(NULL, delims);
-// }
-// }
-
-void Parser::parseToken(char* pch){
-    // std::cout << pch << std::endl;
-    // int i = strcspn (pch, KEYS);
-    // std::cout << "find at pos: " << i << std::endl;
-    // char substr[100];
-    // strncpy (substr, pch, i);
-    // if(scanSupported(substr) >= 0){
-    // std::cout << "Found matching: " << substr << std::endl;
-    // // return something
-    // } else {
-    // std::cout << "No Match for " << substr << std::endl;
-    // }
-    // return something
-
-    // if ( i == strlen(pch) ){
-    // std::cout << "No conditionals found" << std::endl;
-    // }
-}
-
 void Parser::test(){
+    for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {
+        printf("%s", "Element: ");
+        (*it)->print();
+    }
 }

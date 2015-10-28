@@ -41,8 +41,7 @@ bool Command::run(bool b) {
     return true;
 }
 
-void Command::test(){
-    std::cout << "Command Args: "<< std:: endl;
+void Command::print(){
     char ** it = args;
     while (*it != NULL){
         std::cout << *it++ << std::endl;

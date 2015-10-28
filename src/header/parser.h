@@ -12,8 +12,9 @@ class Parser {
         void parseTokenSimple(char * tkn);
         void parseArgs(char*, char**);
         Command* convertToCommand(char*);
-        Connector* convertToConnector(char * str);
+        Connector* convertToConnector(const char * str);
         std::vector<Runner*> runners;
+        // char * stepper;
     public:
         Parser(char * str);
         ~Parser();

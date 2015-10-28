@@ -10,4 +10,8 @@ bool Connector::run(bool b){
     return b ? ifReceiveTrue : ifReceiveFalse;
 }
 
+void Connector::print(){
+    printf("%s\n", key);
+}
+
 Connector::~Connector(){}

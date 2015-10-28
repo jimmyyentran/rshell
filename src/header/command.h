@@ -10,7 +10,7 @@ class Command : public Runner{
         Command(char ** cmd);
         ~Command();
         bool run(bool);
-        void test();
+        void print();
 };
 
 #endif

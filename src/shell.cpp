@@ -43,12 +43,6 @@ void Shell::startShell(){
     }
 }
 
-void Shell::runShell(std::queue<Runner*> runners){
-    std::cout << "pointer: " << &(runners.front()) << std::endl;
-    runners.front()->test();
-    // runners.front()->run();
-}
-
 void Shell::test(){
 }
 

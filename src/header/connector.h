@@ -1,6 +1,7 @@
 #ifndef _CONNECTOR_
 #define _CONNECTOR_
 
+#include <cstdio>
 #include "runner.h"
 
 // Abstract class
@@ -12,6 +13,7 @@ class Connector : public Runner {
     public:
         Connector(char *, bool, bool);
         bool run(bool);
+        void print();
         virtual ~Connector() = 0;
 };
 

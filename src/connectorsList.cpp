@@ -12,7 +12,7 @@ struct OrConnector : public Connector {
 };
 
 struct SemicolonConnector : public Connector {
-    SemicolonConnector() : Connector((char*)"||", true, true) {}
+    SemicolonConnector() : Connector((char*)";", true, true) {}
 };
 
 #endif
