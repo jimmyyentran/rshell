@@ -2,19 +2,30 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
-#include <queue>
 #include <cstdlib>
-#include "connectorsList.cpp"
+#include "header/connectorClasses.h"
 #include "header/runner.h"
 #include "header/parser.h"
 
 const char Parser::KEYS[] = "&|;#";
 
 Parser::Parser(char * stepper){
-    // char * stepper = str;
-    // stepper = str;
     std::cout << stepper << std::endl;
     size_t i = strcspn(stepper, KEYS);
+
+    if(!i){ // first character is a special key
+        if(stepper[i] == '#'){
+            return;
+        }else { // bash doesn't allow any connectors
+            std::cout << "Parse Error at: " << stepper << std::endl;
+            return;
+        }
+    }
+
+    if(strcmp(stepper, "exit") == 0){
+        exit(1);
+    }
+
     while (stepper[i] != '\0'){
         char * command = new char[30];
         strncpy(command, stepper, i);
@@ -125,15 +136,6 @@ void Parser::parseArgs(char * str, char** argv){
 
 Parser::~Parser(){
     // std::cout << "Parser Destructor Called" << std::endl;
-}
-
-
-void Parser::parseTokenSimple(char * tkn){
-    std::cout << "tkn: " << tkn << std::endl;
-    std::cout << "&tnk: " << &tkn << std::endl;
-    ++tkn;
-    std::cout << "++tkn: " << tkn << std::endl;
-    std::cout << "&tkn: "<< &tkn << std::endl;
 }
 
 void Parser::test(){

@@ -6,19 +6,19 @@ EXECUTABLE="$(dirname "$BASEDIR")/bin/rshell"
 echo "MULTI COMMAND TEST"
 echo "------------------"
 {
-echo "uname&&ls"
-echo "uname||ls"
-echo "uname;ls"
-echo "uname#ls"
-echo "uname##ls"
-echo "uname&ls"
-echo "uname|ls"
-echo "uname&|ls"
-echo "uname&&"
-echo "uname||"
-echo "ls -alt && ls"
-echo "exit"
-} | $EXECUTABLE | cat
+    echo "uname&&ls"
+    echo "uname||ls"
+    echo "uname;ls"
+    echo "uname#ls"
+    echo "uname##ls"
+    echo "uname&ls"
+    echo "uname|ls"
+    echo "uname&|ls"
+    echo "uname&&"
+    echo "uname||"
+    echo "ls -alt && ls"
+    echo "exit"
+} | $EXECUTABLE $1| cat
 
 # input () {
     # $EXECUTABLE << EOF

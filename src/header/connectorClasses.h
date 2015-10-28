@@ -1,7 +1,7 @@
-#ifndef _CONNECTORS_LIST_
-#define _CONNECTORS_LIST_
+#ifndef _CONNECTORS_CLASSES_
+#define _CONNECTORS_CLASSES_
 
-#include "header/connector.h"
+#include "connector.h"
 
 struct AndConnector : public Connector {
     AndConnector() : Connector((char*)"&&", true, false) {}

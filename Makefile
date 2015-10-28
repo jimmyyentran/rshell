@@ -33,7 +33,7 @@ test: $(TEST)
 ct: all test
 
 run:
-	@./bin/rshell
+	@./bin/rshell DEBUG4
 
 clean:
 	@rm -rf $(OBJDIR)

@@ -3,13 +3,10 @@
 #include <cstdio>
 #include "header/shell.h"
 #include "header/parser.h"
-#include "header/runner.h"
-#include "header/command.h"
 #include <sys/wait.h>
 
 Shell::Shell(){
     getLoginInfo();
-    // startShell();
 }
 
 void Shell::getLoginInfo(){
@@ -38,13 +35,7 @@ void Shell::startShell(){
         }
 
         Parser* parser = new Parser(input);
-        parser->runRunners();
-        // parser->test();
+        // parser->runRunners();
+        parser->test();
     }
 }
-
-void Shell::test(){
-}
-
-
-
