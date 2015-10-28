@@ -17,6 +17,10 @@ echo "------------------"
     echo "uname&&"
     echo "uname||"
     echo "ls -alt && ls"
+    echo "ls -j && ls"
+    echo "ls -j || ls"
+    echo "ls&&|" #fix
+    echo "ls && || ls" #fix
     echo "exit"
 } | $EXECUTABLE $1| cat
 

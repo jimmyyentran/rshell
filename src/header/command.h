@@ -2,7 +2,6 @@
 #define _COMMAND_
 
 #include "runner.h"
-#include "log.h"
 
 class Command : public Runner{
     private:

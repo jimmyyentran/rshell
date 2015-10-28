@@ -1,12 +1,24 @@
 #include <iostream>
 #include <unistd.h>
 #include <cstdio>
+#include <cstring>
 #include "header/shell.h"
 #include "header/parser.h"
 #include <sys/wait.h>
 
-Shell::Shell(){
+Shell::Shell() : shellType(normal){
     getLoginInfo();
+}
+
+Shell::Shell(const char * type){
+    getLoginInfo();
+    if(strcmp(type, "TEST") == 0){
+        shellType = test;
+    } else if (strcmp(type, "BOOLTEST") == 0){
+        shellType = boolTest;
+    } else {
+        shellType = normal;
+    }
 }
 
 void Shell::getLoginInfo(){
@@ -24,10 +36,13 @@ void Shell::printPrompt(){
 
 void Shell::startShell(){
     while(1){
-        // char *input =  new char[MAX_INPUT2];
         char input[MAX_INPUT2];
         printPrompt();
         std::cin.getline(input, MAX_INPUT2);
+
+        if(shellType > normal){
+            std::cout << input << std::endl;
+        }
 
         // if empty input
         if(*input == '\0'){
@@ -35,7 +50,7 @@ void Shell::startShell(){
         }
 
         Parser* parser = new Parser(input);
-        // parser->runRunners();
-        parser->test();
+        parser->runRunners();
+        // parser->test();
     }
 }

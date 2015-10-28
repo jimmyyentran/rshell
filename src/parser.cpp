@@ -10,7 +10,7 @@
 const char Parser::KEYS[] = "&|;#";
 
 Parser::Parser(char * stepper){
-    std::cout << stepper << std::endl;
+    // std::cout << stepper << std::endl;
     size_t i = strcspn(stepper, KEYS);
 
     if(!i){ // first character is a special key
@@ -20,10 +20,6 @@ Parser::Parser(char * stepper){
             std::cout << "Parse Error at: " << stepper << std::endl;
             return;
         }
-    }
-
-    if(strcmp(stepper, "exit") == 0){
-        exit(1);
     }
 
     while (stepper[i] != '\0'){
@@ -36,7 +32,7 @@ Parser::Parser(char * stepper){
                 if(*stepper++ == '&'){
                     runners.push_back(convertToConnector((char*)"&&"));
                 } else {
-                    std::cout << "Parse error single & not supported" << std::endl;
+                    std::cout << "Parse error: single & not supported" << std::endl;
                     return;
                 }
                 break;
@@ -44,7 +40,7 @@ Parser::Parser(char * stepper){
                 if(*stepper++ == '|'){
                     runners.push_back(convertToConnector((char*)"||"));
                 } else {
-                    std::cout << "Parse error single | not supported" << std::endl;
+                    std::cout << "Parse error: single | not supported" << std::endl;
                     return;
                 }
                 break;
@@ -54,12 +50,12 @@ Parser::Parser(char * stepper){
             case '#':
                 return;
             default:
-                std::cout << "Internal eror" << std::endl;
+                std::cout << "Internal error" << std::endl;
                 exit(1);
                 break;
         }
         if(*stepper == '\0'){ // connector at end
-            printf("%s\n", "end of string");
+            std::cout << "Parse error: Currently no end-of-line connector supported." << std::endl;
             return;
         }
         i = strcspn(stepper, KEYS);
@@ -140,7 +136,6 @@ Parser::~Parser(){
 
 void Parser::test(){
     for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {
-        printf("%s", "Element: ");
         (*it)->print();
     }
 }

@@ -1,13 +1,9 @@
 #include "header/shell.h"
-#include "header/log.h"
 
 int main(int argc, char* argv[])
 {
-    FILELog::ReportingLevel() = FILELog::FromString(argv[1] ? argv[1] : "INFO");
-
-    Shell* shell = new Shell();
+    Shell* shell = new Shell(argv[1] ? argv[1] : "NORMAL");
     shell->startShell();
-
     return 0;
 }
 

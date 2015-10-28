@@ -13,7 +13,6 @@ HEADER = $(wildcard $(SRCDIR)/$(HEADERDIR)/*.h)
 TEST = $(wildcard $(TESTDIR)/*.sh)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	#1
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: clean $(OBJ)
@@ -22,7 +21,6 @@ all: clean $(OBJ)
 $(OBJ): | $(OBJDIR)
 
 $(OBJDIR):
-	#3
 	@mkdir -p $(OBJDIR)
 
 # Test only runs the first file..(all.sh)
@@ -33,7 +31,7 @@ test: $(TEST)
 ct: all test
 
 run:
-	@./bin/rshell DEBUG4
+	@./bin/rshell
 
 clean:
 	@rm -rf $(OBJDIR)

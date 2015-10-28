@@ -13,7 +13,7 @@ Command::Command(char ** cmd){
 bool Command::run(bool b) {
     // bool b should not be false
     if(!b){
-        L_(lerror) << "This function shouldn't receive a false boolean!";
+        std::cerr << "This function shouldn't receive a false boolean!";
         return false;
     }
 
@@ -27,7 +27,6 @@ bool Command::run(bool b) {
     if(child_pid >= 0){
         if(child_pid == 0){ // child process
             if (-1 == execvp( *args, args)){
-                // L_(lerror) << "Can't Execute"
                 perror("Can't execute");
                 exit(1);
             }
@@ -35,18 +34,15 @@ bool Command::run(bool b) {
             wait(&status);
             if (WIFEXITED(status)){
                 if(!WEXITSTATUS(status)){
-                    L_(ldebug) << "Return true: status " << WIFEXITED(status);
                     return true;
                 }
             }
-            L_(ldebug) << "Return true: status " << WIFEXITED(status);
             return false;
         }
     }else{
         perror("Forking error");
         return false;
     }
-    L_(ldebug) << "Return false";
     return false;
 }
 
