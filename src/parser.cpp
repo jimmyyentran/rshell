@@ -21,25 +21,26 @@ Parser::Parser(char * str){
 
     // multi command
     stepper = &(str[i]);
-    std::cout << "stepper: " << stepper << std::endl;
+    if (*stepper == '&' && *(++stepper) == '&') {
+        std::cout << "There's an &&" << std::endl;
+    } else if (*stepper == '|' && *(++stepper) == '|'){
+        std::cout << "There's an ||" << std::endl;
+    } else if (*stepper == ';'){
+        std::cout << "There's an ;" << std::endl;
+    } else {
+        std::cout << "Parse error at " << stepper << std::endl;
+    }
 }
 
 Connector* Parser::convertToConnector(char * str){
-    if(*str == '&'){
-        if(*(++str) == '&'){
-            //make & connector
-            return new AndConnector();
-        }
-    } else if (*str == '|'){
-        if(*(++str) == '|'){
-            //make || connector
-            return new OrConnector();
-        }
-    } else if (*str == ';'){
-        // make ; connector
+    if(str == "&&"){
+        return new AndConnector();
+    } else if (str == "||"){
+        return new OrConnector();
+    } else if (str == ";"){
         return new SemicolonConnector();
-    } else { // equals to # comment
-        // make # connector
+    } else { // # pound
+
     }
     return NULL;
 }

@@ -13,4 +13,9 @@ echo
 # TODO: fix the space command
 echo "MULTI COMMAND TEST"
 echo "------------------"
-input "ls&&"
+input "ls&&ls"
+input "ls||ls"
+input "ls;ls"
+input "ls&ls"
+input "ls|ls"
+input "ls&|ls"
