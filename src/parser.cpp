@@ -10,54 +10,70 @@
 const char Parser::KEYS[] = "&|;#";
 
 Parser::Parser(char * stepper){
-    // std::cout << stepper << std::endl;
     size_t i = strcspn(stepper, KEYS);
-
-    if(!i){ // first character is a special key
-        if(stepper[i] == '#'){
-            return;
-        }else { // bash doesn't allow any connectors
-            std::cout << "Parse Error at: " << stepper << std::endl;
-            return;
-        }
-    }
+    bool lastPush = 0; // 1 for command; 0 for connector
 
     while (stepper[i] != '\0'){
         char * command = new char[30];
         strncpy(command, stepper, i);
-        runners.push_back(convertToCommand(command));
-        stepper = &(stepper[i]);
-        switch (*stepper++){
-            case '&':
-                if(*stepper++ == '&'){
-                    runners.push_back(convertToConnector((char*)"&&"));
-                } else {
-                    std::cout << "Parse error: single & not supported" << std::endl;
-                    return;
-                }
-                break;
-            case '|':
-                if(*stepper++ == '|'){
-                    runners.push_back(convertToConnector((char*)"||"));
-                } else {
-                    std::cout << "Parse error: single | not supported" << std::endl;
-                    return;
-                }
-                break;
-            case ';':
-                runners.push_back(convertToConnector((char*)";"));
-                break;
-            case '#':
-                return;
-            default:
-                std::cout << "Internal error" << std::endl;
-                exit(1);
-                break;
+        Command* cmdPtr = convertToCommand(command);
+
+        // if valid command, push
+        if(cmdPtr != NULL){
+            runners.push_back(cmdPtr);
+            lastPush = 1;
         }
+        stepper = &(stepper[i]);
+
+        // prevents double connectors
+        if(lastPush){
+            // this is one of the example that shows the power of switch-cases.
+            // Switch case holds the value to check before incrementing. If-else
+            // doesn't do this
+            switch (*stepper++){
+                case '&':
+                    if(*stepper++ == '&'){
+                        runners.push_back(convertToConnector((char*)"&&"));
+                        lastPush = 0;
+                    } else {
+                        std::cout << "Parse error: single & not supported" << std::endl;
+                        return;
+                    }
+                    break;
+                case '|':
+                    if(*stepper++ == '|'){
+                        runners.push_back(convertToConnector((char*)"||"));
+                        lastPush = 0;
+                    } else {
+                        std::cout << "Parse error: single | not supported" << std::endl;
+                        return;
+                    }
+                    break;
+                case ';':
+                    runners.push_back(convertToConnector((char*)";"));
+                    lastPush = 0;
+                    break;
+                case '#':
+                    return; // stop taking more inputs
+                default:
+                    std::cout << "Internal error" << std::endl;
+                    exit(1);
+                    break;
+            }
+        } else {
+            if(stepper[i] == '#'){
+                return;
+            }else { // bash doesn't allow beginning and adjacent connectors
+                std::cout << "Parse Error at: " << stepper << std::endl;
+                return;
+            }
+        }
+
         if(*stepper == '\0'){ // connector at end
             std::cout << "Parse error: Currently no end-of-line connector supported." << std::endl;
             return;
         }
+
         i = strcspn(stepper, KEYS);
     }
     char* command = new char[30];
@@ -107,13 +123,18 @@ void Parser::runRunners(){
 }
 
 // str returns from shell and will go out of scope...should new a new char
+// converts string to a command unless the string is empty;
 Command* Parser::convertToCommand(char * str){
     char ** argv = new char*[30];
     parseArgs(str, argv);
+    if(*argv == '\0'){
+        return NULL;
+    }
     return new Command(argv);
 }
 
 // TODO:should be const str
+// Doesn't take in spaces at beginning
 void Parser::parseArgs(char * str, char** argv){
     while (*str != '\0'){
         while (*str == ' ' || *str == '\t' || *str == '\n') {

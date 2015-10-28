@@ -15,4 +15,4 @@ echo "------------------"
     echo "lscpu "
     echo "exit"
 
-} | $EXECUTABLE $1| tee >(cat) >(grep "Parent" | cat)
+} | $EXECUTABLE $1| cat
