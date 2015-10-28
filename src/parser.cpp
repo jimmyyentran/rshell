@@ -76,6 +76,7 @@ Parser::Parser(char * stepper){
 
         i = strcspn(stepper, KEYS);
     }
+
     char* command = new char[30];
     strcpy(command, stepper);
     runners.push_back(convertToCommand(command));

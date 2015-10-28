@@ -50,10 +50,11 @@ void Shell::startShell(){
         }
 
         Parser* parser = new Parser(input);
+
         if(shellType == boolTest){
             parser->test();
-            continue;
+        } else {
+            parser->runRunners();
         }
-        parser->runRunners();
     }
 }
