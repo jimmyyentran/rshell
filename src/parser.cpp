@@ -80,10 +80,22 @@ std::vector<Runner*>& Parser::getRunners(){
 }
 
 void Parser::runRunners(){
+    bool commandVal= true;
+    bool connectorVal = true;
     for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {
-        (*it)->run(true);
-        exit(1);
-        // delete runners.front();
+        if(dynamic_cast<Command*>(*it)){
+            // If previous connector returns true then run. We don't want to run
+            // commands with a false input value because it might
+            // change our preserved value from the last run.
+            // This renders the run(bool) boolean parameter useless because we will
+            // only call run whenever parameter is true. However polymorphism
+            // requires the parameter.
+            if(connectorVal){
+                commandVal = (*it)->run(connectorVal);
+            }
+        } else {
+            connectorVal = (*it)->run(commandVal);
+        }
     }
 }
 

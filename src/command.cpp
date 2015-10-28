@@ -27,14 +27,16 @@ bool Command::run(bool b) {
         }else{ // parent process
             wait(&status);
             if (WIFEXITED(status)){
-                printf("Parent: Child exited with status %d\n", WEXITSTATUS(status));
+                if(!WEXITSTATUS(status)){
+                    printf("Return true: status %d\n", WEXITSTATUS(status));
+                    return true;
+                }
             }
-            // waitpid( child_pid, &status, 0);
-            return true;
+            printf("Return false: status %d\n", WEXITSTATUS(status));
+            return false;
         }
     }else{
         perror("Forking error");
-        std::cout << "Run return false" << std::endl;
         return false;
     }
     std::cout << "Run return true" << std::endl;

@@ -17,6 +17,7 @@ echo "uname&|ls"
 echo "uname&&"
 echo "uname||"
 echo "ls -alt && ls"
+echo "exit"
 } | $EXECUTABLE | cat
 
 # input () {
