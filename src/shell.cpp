@@ -56,5 +56,7 @@ void Shell::startShell(){
         } else {
             parser->runRunners();
         }
+
+        delete parser;
     }
 }

@@ -3,6 +3,7 @@
 #include <cstring>
 #include <vector>
 #include <cstdlib>
+#include <stdexcept>
 #include "header/connectorClasses.h"
 #include "header/runner.h"
 #include "header/parser.h"
@@ -37,6 +38,7 @@ Parser::Parser(char * stepper){
                         lastPush = 0;
                     } else {
                         std::cout << "Parse error: single & not supported" << std::endl;
+                        throw std::invalid_argument("&");
                         return;
                     }
                     break;
@@ -46,6 +48,7 @@ Parser::Parser(char * stepper){
                         lastPush = 0;
                     } else {
                         std::cout << "Parse error: single | not supported" << std::endl;
+                        throw std::invalid_argument("&");
                         return;
                     }
                     break;
@@ -54,6 +57,7 @@ Parser::Parser(char * stepper){
                     lastPush = 0;
                     break;
                 case '#':
+                    throw std::invalid_argument("&");
                     return; // stop taking more inputs
                 default:
                     std::cout << "Internal error" << std::endl;
@@ -62,15 +66,18 @@ Parser::Parser(char * stepper){
             }
         } else {
             if(stepper[i] == '#'){
+                throw std::invalid_argument("&");
                 return;
             }else { // bash doesn't allow beginning and adjacent connectors
                 std::cout << "Parse Error at: " << stepper << std::endl;
+                throw std::invalid_argument("&");
                 return;
             }
         }
 
         if(*stepper == '\0'){ // connector at end
             std::cout << "Parse error: Currently no end-of-line connector supported." << std::endl;
+            throw std::invalid_argument("&");
             return;
         }
 
@@ -153,10 +160,21 @@ void Parser::parseArgs(char * str, char** argv){
 }
 
 Parser::~Parser(){
-    // std::cout << "Parser Destructor Called" << std::endl;
+    std::cout << "Parser Destructor Called" << std::endl;
+    // for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {
+        // delete (*it);
+    // }
+    for (unsigned i = 0; i < runners.size(); ++i) {
+        delete runners[i];
+    }
+    runners.clear();
 }
 
 void Parser::test(){
+    if(runners.empty()){
+        printf("%s\n", "Empty string");
+        return;
+    }
     for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {
         (*it)->print();
     }
