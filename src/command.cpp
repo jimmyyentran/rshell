@@ -8,6 +8,8 @@
 
 Command::Command(char ** cmd){
     args = cmd;
+    std::cout << cmd << std::endl;
+    std::cout << args << std::endl;
 }
 
 bool Command::run(bool b) {
@@ -54,7 +56,26 @@ void Command::print(){
 }
 
 Command::~Command(){
-    // std::cout << "Command Destructor Called " << std::endl;
-    delete args[30];
+    std::cout << "Command Destructor Called " << std::endl;
+    unsigned i = 0;
+    for (; i < 4; i++){
+        std::cout << i << std::endl;
+        if(args[i] == NULL){
+            std::cout << "NULL" << std::endl;
+        }else {
+            std::cout << args[i] << std::endl;
+        }
+    }
+    // std::cout << &(args[ 0 ]) << std::endl;
+    // std::cout << &(args[ 0 ][0]) << std::endl;
+    // delete args[1];
+    // delete args[0];
+    // delete args;
+    // char ** it = args;
+    // while (*it != NULL){
+        // std::cout << *it << std::endl;
+        // // delete args[i];
+    // }
+    // delete args[30];
 }
 

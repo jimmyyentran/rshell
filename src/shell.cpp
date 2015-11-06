@@ -49,14 +49,31 @@ void Shell::startShell(){
             continue;
         }
 
-        Parser* parser = new Parser(input);
+        Parser parser = Parser(input);
 
-        if(shellType == boolTest){
-            parser->test();
-        } else {
-            parser->runRunners();
+        try {
+            parser.parserInit();
+        } catch (const std::exception& e){
+            printf("%s\n", e.what());
         }
 
-        delete parser;
+        if(shellType == boolTest){
+            parser.test();
+        } else {
+            parser.runRunners();
+        }
+
+        // Parser* parser = new Parser(input);
+        // try {
+        // if(shellType == boolTest){
+        // parser->test();
+        // } else {
+        // parser->runRunners();
+        // }
+        // delete parser;
+        // } catch (const std::exception& e){
+        // // delete parser;
+        // }
+
     }
 }

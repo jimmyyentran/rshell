@@ -10,13 +10,25 @@
 
 const char Parser::KEYS[] = "&|;#";
 
-Parser::Parser(char * stepper){
+Parser::Parser(char * str){
+    // stepper = char[500];
+    strncpy(cmd, str, 500);
+}
+
+void Parser::parserInit(){
+    char * stepper = cmd;
+
     size_t i = strcspn(stepper, KEYS);
     bool lastPush = 0; // 1 for command; 0 for connector
 
     while (stepper[i] != '\0'){
         char * command = new char[30];
-        strncpy(command, stepper, i);
+        // char command[30];
+        // strncpy(command, stepper, i);
+        // command[i+1] = '\0';
+        memcpy(command, stepper, i);
+        command[i] = '\0';
+        printf("Passed command: %s\n", command);
         Command* cmdPtr = convertToCommand(command);
 
         // if valid command, push
@@ -85,7 +97,10 @@ Parser::Parser(char * stepper){
     }
 
     char* command = new char[30];
-    strcpy(command, stepper);
+    // strcpy(command, stepper);
+    memcpy(command, stepper, i);
+    command[i] = '\0';
+    printf("Passed last command: %s\n", command);
     runners.push_back(convertToCommand(command));
 }
 
@@ -138,12 +153,14 @@ Command* Parser::convertToCommand(char * str){
     if(*argv == '\0'){
         return NULL;
     }
+    std::cout << argv << std::endl;
     return new Command(argv);
 }
 
 // TODO:should be const str
 // Doesn't take in spaces at beginning
 void Parser::parseArgs(char * str, char** argv){
+    std::cout << "In parseArgs" << argv << std::endl;
     while (*str != '\0'){
         while (*str == ' ' || *str == '\t' || *str == '\n') {
             *str++ = '\0';
@@ -162,7 +179,7 @@ void Parser::parseArgs(char * str, char** argv){
 Parser::~Parser(){
     std::cout << "Parser Destructor Called" << std::endl;
     // for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {
-        // delete (*it);
+    // delete (*it);
     // }
     for (unsigned i = 0; i < runners.size(); ++i) {
         delete runners[i];

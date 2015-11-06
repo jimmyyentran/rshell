@@ -2,6 +2,7 @@
 #define _CONNECTOR_
 
 #include <cstdio>
+#include <iostream>
 #include "runner.h"
 
 // Abstract class

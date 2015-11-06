@@ -14,4 +14,6 @@ void Connector::print(){
     printf("%s\n", key);
 }
 
-Connector::~Connector(){}
+Connector::~Connector(){
+    std::cout << "Connector Destructor Called " << std::endl;
+}
