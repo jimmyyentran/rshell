@@ -1,17 +1,15 @@
 #include <stdio.h>
-#include <iostream>
 #include <cstring>
 #include <vector>
 #include <cstdlib>
 #include <stdexcept>
 #include "header/connectorClasses.h"
-#include "header/runner.h"
 #include "header/parser.h"
 
 const char Parser::KEYS[] = "&|;#";
 
 Parser::Parser(char * str){
-    strncpy(cmd, str, 500);
+    strncpy(cmd, str, Shell::MAX_INPUT2);
 }
 
 void Parser::parserInit(){
@@ -21,7 +19,7 @@ void Parser::parserInit(){
     bool lastPush = 0; // 1 for command; 0 for connector
 
     while (stepper[i] != '\0'){
-        char command[30];
+        char command[COMMAND_LENGTH];
         memcpy(command, stepper, i);
         command[i] = '\0';
         Command* cmdPtr = convertToCommand(command);
@@ -61,7 +59,6 @@ void Parser::parserInit(){
                     lastPush = 0;
                     break;
                 case '#':
-                    // throw std::invalid_argument("&");
                     return; // stop taking more inputs
                 default:
                     std::cout << "Internal error" << std::endl;
@@ -70,7 +67,6 @@ void Parser::parserInit(){
             }
         } else {
             if(stepper[i] == '#'){
-                // throw std::invalid_argument("&");
                 return;
             }else { // bash doesn't allow beginning and adjacent connectors
                 char const * msg = stepper;
@@ -85,7 +81,7 @@ void Parser::parserInit(){
         i = strcspn(stepper, KEYS);
     }
 
-    char commandLast[30];
+    char commandLast[COMMAND_LENGTH];
     memcpy(commandLast, stepper, i);
     commandLast[i] = '\0';
     runners.push_back(convertToCommand(commandLast));

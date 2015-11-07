@@ -5,12 +5,14 @@
 #include <cstring>
 #include <cstdlib>
 #include "header/command.h"
+#include "header/parser.h"
+
 
 Command::Command(char ** cmd){
     unsigned i = 0;
     for(;*cmd != NULL ; ++cmd, ++i){
-        char * arg = new char [30];
-        strncpy(arg, *cmd, 30);
+        char * arg = new char [Parser::COMMAND_LENGTH];
+        strncpy(arg, *cmd, Parser::COMMAND_LENGTH);
         args[i] = arg;
     }
     args[i] = NULL;

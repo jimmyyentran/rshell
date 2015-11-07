@@ -15,7 +15,7 @@ class Shell{
         void getLoginInfo();
         void printPrompt();
     public:
-        static const int MAX_INPUT2 = 100;
+        static const int MAX_INPUT2 = 500;
         Shell();
         Shell(const char *);
         void startShell();

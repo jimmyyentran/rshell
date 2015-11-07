@@ -3,6 +3,8 @@
 
 #include "command.h"
 #include "connector.h"
+#include "shell.h"
+#include "runner.h"
 #include <queue>
 
 class Parser {
@@ -15,6 +17,7 @@ class Parser {
         std::vector<Runner*> runners;
         char cmd[500];
     public:
+        const static int COMMAND_LENGTH = 100;
         Parser(char * str);
         ~Parser();
         void test();
