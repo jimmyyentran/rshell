@@ -9,13 +9,13 @@
 
 class Parser {
     private:
+        char cmd[500];
         const static char KEYS[];
 
         void parseArgs(char*, char**);
         Command* convertToCommand(char*);
         Connector* convertToConnector(const char * str);
         std::vector<Runner*> runners;
-        char cmd[500];
     public:
         const static int COMMAND_LENGTH = 100;
         Parser(char * str);
