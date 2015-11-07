@@ -15,5 +15,5 @@ void Connector::print(){
 }
 
 Connector::~Connector(){
-    std::cout << "Connector Destructor Called " << std::endl;
+    // std::cout << "Connector Destructor Called " << std::endl;
 }

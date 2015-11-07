@@ -11,7 +11,6 @@
 const char Parser::KEYS[] = "&|;#";
 
 Parser::Parser(char * str){
-    // stepper = char[500];
     strncpy(cmd, str, 500);
 }
 
@@ -22,13 +21,9 @@ void Parser::parserInit(){
     bool lastPush = 0; // 1 for command; 0 for connector
 
     while (stepper[i] != '\0'){
-        char * command = new char[30];
-        // char command[30];
-        // strncpy(command, stepper, i);
-        // command[i+1] = '\0';
+        char command[30];
         memcpy(command, stepper, i);
         command[i] = '\0';
-        printf("Passed command: %s\n", command);
         Command* cmdPtr = convertToCommand(command);
 
         // if valid command, push
@@ -49,9 +44,7 @@ void Parser::parserInit(){
                         runners.push_back(convertToConnector((char*)"&&"));
                         lastPush = 0;
                     } else {
-                        std::cout << "Parse error: single & not supported" << std::endl;
-                        throw std::invalid_argument("&");
-                        return;
+                        throw std::invalid_argument("Parse error: single & not supported");
                     }
                     break;
                 case '|':
@@ -59,8 +52,7 @@ void Parser::parserInit(){
                         runners.push_back(convertToConnector((char*)"||"));
                         lastPush = 0;
                     } else {
-                        std::cout << "Parse error: single | not supported" << std::endl;
-                        throw std::invalid_argument("&");
+                        throw std::invalid_argument("Parse error: single | not supported");
                         return;
                     }
                     break;
@@ -69,7 +61,7 @@ void Parser::parserInit(){
                     lastPush = 0;
                     break;
                 case '#':
-                    throw std::invalid_argument("&");
+                    // throw std::invalid_argument("&");
                     return; // stop taking more inputs
                 default:
                     std::cout << "Internal error" << std::endl;
@@ -78,41 +70,33 @@ void Parser::parserInit(){
             }
         } else {
             if(stepper[i] == '#'){
-                throw std::invalid_argument("&");
+                // throw std::invalid_argument("&");
                 return;
             }else { // bash doesn't allow beginning and adjacent connectors
-                std::cout << "Parse Error at: " << stepper << std::endl;
-                throw std::invalid_argument("&");
-                return;
+                char const * msg = stepper;
+                throw std::invalid_argument(std::string("Parse Error at: ") + msg);
             }
         }
 
         if(*stepper == '\0'){ // connector at end
-            std::cout << "Parse error: Currently no end-of-line connector supported." << std::endl;
-            throw std::invalid_argument("&");
-            return;
+            throw std::invalid_argument("Parse error: Currently no end-of-line connector supported.");
         }
 
         i = strcspn(stepper, KEYS);
     }
 
-    char* command = new char[30];
-    // strcpy(command, stepper);
-    memcpy(command, stepper, i);
-    command[i] = '\0';
-    printf("Passed last command: %s\n", command);
-    runners.push_back(convertToCommand(command));
+    char commandLast[30];
+    memcpy(commandLast, stepper, i);
+    commandLast[i] = '\0';
+    runners.push_back(convertToCommand(commandLast));
 }
 
 Connector* Parser::convertToConnector(const char * str){
     if(strcmp(str, "&&") == 0){
-        // printf("%s\n", "And");
         return new AndConnector();
     } else if (strcmp(str, "||") == 0){
-        // printf("%s\n", "Or");
         return new OrConnector();
     } else if (strcmp(str, ";") == 0){
-        // printf("%s\n", "Semi");
         return new SemicolonConnector();
     } else { // # pound
 
@@ -145,22 +129,20 @@ void Parser::runRunners(){
     }
 }
 
-// str returns from shell and will go out of scope...should new a new char
-// converts string to a command unless the string is empty;
+// converts string to a command unless the string is empty return NULL
 Command* Parser::convertToCommand(char * str){
-    char ** argv = new char*[30];
-    parseArgs(str, argv);
+    char * argv[30];
+    *argv = str;
+    parseArgs(*argv, argv);
     if(*argv == '\0'){
         return NULL;
     }
-    std::cout << argv << std::endl;
+
     return new Command(argv);
 }
 
-// TODO:should be const str
 // Doesn't take in spaces at beginning
 void Parser::parseArgs(char * str, char** argv){
-    std::cout << "In parseArgs" << argv << std::endl;
     while (*str != '\0'){
         while (*str == ' ' || *str == '\t' || *str == '\n') {
             *str++ = '\0';
@@ -168,7 +150,6 @@ void Parser::parseArgs(char * str, char** argv){
         if(*str != '\0'){ // don't add null elements
             *argv++ = str;
         }
-        // *argv++ = str;
         while (*str != '\0' && *str != ' ' && *str != '\t' && *str != '\n'){
             str++;
         }
@@ -177,10 +158,6 @@ void Parser::parseArgs(char * str, char** argv){
 }
 
 Parser::~Parser(){
-    std::cout << "Parser Destructor Called" << std::endl;
-    // for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {
-    // delete (*it);
-    // }
     for (unsigned i = 0; i < runners.size(); ++i) {
         delete runners[i];
     }
@@ -189,7 +166,6 @@ Parser::~Parser(){
 
 void Parser::test(){
     if(runners.empty()){
-        printf("%s\n", "Empty string");
         return;
     }
     for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {

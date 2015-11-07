@@ -55,6 +55,10 @@ void Shell::startShell(){
             parser.parserInit();
         } catch (const std::exception& e){
             printf("%s\n", e.what());
+            if(shellType == boolTest){
+                parser.test();
+            }
+            continue;
         }
 
         if(shellType == boolTest){
@@ -62,18 +66,5 @@ void Shell::startShell(){
         } else {
             parser.runRunners();
         }
-
-        // Parser* parser = new Parser(input);
-        // try {
-        // if(shellType == boolTest){
-        // parser->test();
-        // } else {
-        // parser->runRunners();
-        // }
-        // delete parser;
-        // } catch (const std::exception& e){
-        // // delete parser;
-        // }
-
     }
 }

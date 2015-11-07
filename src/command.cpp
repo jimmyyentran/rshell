@@ -7,9 +7,13 @@
 #include "header/command.h"
 
 Command::Command(char ** cmd){
-    args = cmd;
-    std::cout << cmd << std::endl;
-    std::cout << args << std::endl;
+    unsigned i = 0;
+    for(;*cmd != NULL ; ++cmd, ++i){
+        char * arg = new char [30];
+        strncpy(arg, *cmd, 30);
+        args[i] = arg;
+    }
+    args[i] = NULL;
 }
 
 bool Command::run(bool b) {
@@ -56,26 +60,10 @@ void Command::print(){
 }
 
 Command::~Command(){
-    std::cout << "Command Destructor Called " << std::endl;
-    unsigned i = 0;
-    for (; i < 4; i++){
-        std::cout << i << std::endl;
-        if(args[i] == NULL){
-            std::cout << "NULL" << std::endl;
-        }else {
-            std::cout << args[i] << std::endl;
-        }
+    // std::cout << "Command Destructor Called " << std::endl;
+    //delete new allocated arrays
+    for(unsigned i = 0; args[i] != NULL ; ++i){
+        delete [] args[i];
     }
-    // std::cout << &(args[ 0 ]) << std::endl;
-    // std::cout << &(args[ 0 ][0]) << std::endl;
-    // delete args[1];
-    // delete args[0];
-    // delete args;
-    // char ** it = args;
-    // while (*it != NULL){
-        // std::cout << *it << std::endl;
-        // // delete args[i];
-    // }
-    // delete args[30];
 }
 

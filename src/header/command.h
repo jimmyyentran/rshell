@@ -5,7 +5,9 @@
 
 class Command : public Runner{
     private:
-        char **args;
+        // char **args;
+        // char args[30][30];
+        char * args[30];
     public:
         Command(char ** cmd);
         ~Command();
