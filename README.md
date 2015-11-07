@@ -21,7 +21,7 @@ CS100 Programming assignment
 ##Bugs
 ###rshell
 - `$ git status# comment here` is parsed to `git status` and `# comment here`
-- `$ lscpu;` still runs the command instead of exiting
+- `$ lscpu;;` still runs the command instead of exiting
 - Lots of memory leaks
 - Limitations to # input length, argument character length, and argument lenght
 
