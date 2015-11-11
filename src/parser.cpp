@@ -6,7 +6,7 @@
 #include "header/connectorClasses.h"
 #include "header/parser.h"
 
-const char Parser::KEYS[] = "&|;#[]()";
+const char Parser::KEYS[] = "&|;#()";
 
 Parser::Parser(char * str){
     strncpy(cmd, str, Shell::MAX_INPUT2);
@@ -32,10 +32,7 @@ void Parser::parserInit(){
         stepper = &(stepper[i]);
 
         // prevents double connectors
-        if(lastPush){
-            // this is one of the example that shows the power of switch-cases.
-            // Switch case holds the value to check before incrementing. If-else
-            // doesn't do this
+        if(lastPush){ //last push was a command
             switch (*stepper++){
                 case '&':
                     if(*stepper++ == '&'){
@@ -60,16 +57,12 @@ void Parser::parserInit(){
                     break;
                 case '#':
                     return; // stop taking more inputs
-                case '[':
-                    std::cout << "found ]" << std::endl;
-                    break;
-                case ']':
-                    std::cout << "found ]" << std::endl;
-                    break;
                 case '(':
+                    runners.push_back(convertToConnector((char*)"("));
                     std::cout << "found (" << std::endl;
                     break;
                 case ')':
+                    runners.push_back(convertToConnector((char*)")"));
                     std::cout << "found )" << std::endl;
                     break;
                 default:
@@ -77,22 +70,10 @@ void Parser::parserInit(){
                     exit(1);
                     break;
             }
-        } else {
+        } else { //last push was a connector or beginning of input
             switch (*stepper){
                 case '#':
                     return;
-                case '[':
-                    std::cout << "found ]" << std::endl;
-                    break;
-                case ']':
-                    std::cout << "found ]" << std::endl;
-                    break;
-                case '(':
-                    std::cout << "found (" << std::endl;
-                    break;
-                case ')':
-                    std::cout << "found )" << std::endl;
-                    break;
                 default:
                     char const * msg = stepper;
                     throw std::invalid_argument(std::string("Parse Error at: ") + msg);
@@ -126,7 +107,8 @@ void Parser::parserInit(){
             return new OrConnector();
         } else if (strcmp(str, ";") == 0){
             return new SemicolonConnector();
-        } else { // # pound
+        } else if (strcmp(str, "(") == 0 || strcmp(str, ")")){ // # poundA
+            // return new OpenParenConnector();
 
         }
         printf("%s\n", "error");
