@@ -6,7 +6,7 @@
 #include "header/connectorClasses.h"
 #include "header/parser.h"
 
-const char Parser::KEYS[] = "&|;#";
+const char Parser::KEYS[] = "&|;#[]()";
 
 Parser::Parser(char * str){
     strncpy(cmd, str, Shell::MAX_INPUT2);
@@ -60,18 +60,50 @@ void Parser::parserInit(){
                     break;
                 case '#':
                     return; // stop taking more inputs
+                case '[':
+                    std::cout << "found ]" << std::endl;
+                    break;
+                case ']':
+                    std::cout << "found ]" << std::endl;
+                    break;
+                case '(':
+                    std::cout << "found (" << std::endl;
+                    break;
+                case ')':
+                    std::cout << "found )" << std::endl;
+                    break;
                 default:
                     std::cout << "Internal error" << std::endl;
                     exit(1);
                     break;
             }
         } else {
-            if(stepper[i] == '#'){
-                return;
-            }else { // bash doesn't allow beginning and adjacent connectors
-                char const * msg = stepper;
-                throw std::invalid_argument(std::string("Parse Error at: ") + msg);
+            switch (*stepper){
+                case '#':
+                    return;
+                case '[':
+                    std::cout << "found ]" << std::endl;
+                    break;
+                case ']':
+                    std::cout << "found ]" << std::endl;
+                    break;
+                case '(':
+                    std::cout << "found (" << std::endl;
+                    break;
+                case ')':
+                    std::cout << "found )" << std::endl;
+                    break;
+                default:
+                    char const * msg = stepper;
+                    throw std::invalid_argument(std::string("Parse Error at: ") + msg);
             }
+            // if(stepper[i] == '#'){
+            // if(*stepper == '#'){
+            // return;
+            // }else { // bash doesn't allow beginning and adjacent connectors
+            // char const * msg = stepper;
+            // throw std::invalid_argument(std::string("Parse Error at: ") + msg);
+            // }
         }
 
         if(*stepper == '\0'){ // connector at end
@@ -79,92 +111,92 @@ void Parser::parserInit(){
         }
 
         i = strcspn(stepper, KEYS);
-    }
-
-    char commandLast[COMMAND_LENGTH];
-    memcpy(commandLast, stepper, i);
-    commandLast[i] = '\0';
-    runners.push_back(convertToCommand(commandLast));
-}
-
-Connector* Parser::convertToConnector(const char * str){
-    if(strcmp(str, "&&") == 0){
-        return new AndConnector();
-    } else if (strcmp(str, "||") == 0){
-        return new OrConnector();
-    } else if (strcmp(str, ";") == 0){
-        return new SemicolonConnector();
-    } else { // # pound
-
-    }
-    printf("%s\n", "error");
-    return NULL;
-}
-
-std::vector<Runner*>& Parser::getRunners(){
-    return runners;
-}
-
-void Parser::runRunners(){
-    bool commandVal= true;
-    bool connectorVal = true;
-    for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {
-        if(dynamic_cast<Command*>(*it)){
-            // If previous connector returns true then run. We don't want to run
-            // commands with a false input value because it might
-            // change our preserved value from the last run.
-            // This renders the run(bool) boolean parameter useless because we will
-            // only call run whenever parameter is true. However polymorphism
-            // requires the parameter.
-            if(connectorVal){
-                commandVal = (*it)->run(connectorVal);
-            }
-        } else {
-            connectorVal = (*it)->run(commandVal);
         }
-    }
-}
 
-// converts string to a command unless the string is empty return NULL
-Command* Parser::convertToCommand(char * str){
-    char * argv[30];
-    *argv = str;
-    parseArgs(*argv, argv);
-    if(*argv == '\0'){
+        char commandLast[COMMAND_LENGTH];
+        memcpy(commandLast, stepper, i);
+        commandLast[i] = '\0';
+        runners.push_back(convertToCommand(commandLast));
+    }
+
+    Connector* Parser::convertToConnector(const char * str){
+        if(strcmp(str, "&&") == 0){
+            return new AndConnector();
+        } else if (strcmp(str, "||") == 0){
+            return new OrConnector();
+        } else if (strcmp(str, ";") == 0){
+            return new SemicolonConnector();
+        } else { // # pound
+
+        }
+        printf("%s\n", "error");
         return NULL;
     }
 
-    return new Command(argv);
-}
+    std::vector<Runner*>& Parser::getRunners(){
+        return runners;
+    }
 
-// Doesn't take in spaces at beginning
-void Parser::parseArgs(char * str, char** argv){
-    while (*str != '\0'){
-        while (*str == ' ' || *str == '\t' || *str == '\n') {
-            *str++ = '\0';
-        }
-        if(*str != '\0'){ // don't add null elements
-            *argv++ = str;
-        }
-        while (*str != '\0' && *str != ' ' && *str != '\t' && *str != '\n'){
-            str++;
+    void Parser::runRunners(){
+        bool commandVal= true;
+        bool connectorVal = true;
+        for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {
+            if(dynamic_cast<Command*>(*it)){
+                // If previous onnector returns true then run. We don't want to run
+                // commands with a false input value because it might
+                // change our preserved value from the last run.
+                // This renders the run(bool) boolean parameter useless because we will
+                // only call run whenever parameter is true. However polymorphism
+                // requires the parameter.
+                if(connectorVal){
+                    commandVal = (*it)->run(connectorVal);
+                }
+            } else {
+                connectorVal = (*it)->run(commandVal);
+            }
         }
     }
-    *argv = '\0';
-}
 
-Parser::~Parser(){
-    for (unsigned i = 0; i < runners.size(); ++i) {
-        delete runners[i];
-    }
-    runners.clear();
-}
+    // converts string to a command unless the string is empty return NULL
+    Command* Parser::convertToCommand(char * str){
+        char * argv[30];
+        *argv = str;
+        parseArgs(*argv, argv);
+        if(*argv == '\0'){
+            return NULL;
+        }
 
-void Parser::test(){
-    if(runners.empty()){
-        return;
+        return new Command(argv);
     }
-    for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {
-        (*it)->print();
+
+    // Doesn't take in spaces at beginning
+    void Parser::parseArgs(char * str, char** argv){
+        while (*str != '\0'){
+            while (*str == ' ' || *str == '\t' || *str == '\n') {
+                *str++ = '\0';
+            }
+            if(*str != '\0'){ // don't add null elements
+                *argv++ = str;
+            }
+            while (*str != '\0' && *str != ' ' && *str != '\t' && *str != '\n'){
+                str++;
+            }
+        }
+        *argv = '\0';
     }
-}
+
+    Parser::~Parser(){
+        for (unsigned i = 0; i < runners.size(); ++i) {
+            delete runners[i];
+        }
+        runners.clear();
+    }
+
+    void Parser::test(){
+        if(runners.empty()){
+            return;
+        }
+        for (std::vector<Runner*>::iterator it = runners.begin(); it != runners.end(); ++it) {
+            (*it)->print();
+        }
+    }
