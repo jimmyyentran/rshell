@@ -16,6 +16,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: clean $(OBJ)
+# all: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(OBJDIR)/$(EXECUTABLE)
 
 $(OBJ): | $(OBJDIR)

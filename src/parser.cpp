@@ -14,6 +14,7 @@ Parser::Parser(char * str){
 
 void Parser::parserInit(){
     char * stepper = cmd;
+    int parens = 0;
 
     size_t i = strcspn(stepper, KEYS);
     bool lastPush = 0; // 1 for command; 0 for connector
@@ -57,46 +58,51 @@ void Parser::parserInit(){
                     break;
                 case '#':
                     return; // stop taking more inputs
-                case '(':
-                    runners.push_back(convertToConnector((char*)"("));
-                    std::cout << "found (" << std::endl;
-                    break;
                 case ')':
                     runners.push_back(convertToConnector((char*)")"));
-                    std::cout << "found )" << std::endl;
+                    parens--;
                     break;
                 default:
-                    std::cout << "Internal error" << std::endl;
-                    exit(1);
-                    break;
+                    char const * msg = stepper-1;
+                    throw std::invalid_argument(std::string("Parse Error at2: ") + msg);
             }
         } else { //last push was a connector or beginning of input
             switch (*stepper){
                 case '#':
                     return;
+                case '(': //last push remains connector
+                    runners.push_back(convertToConnector((char*)"("));
+                    parens++;
+                    stepper++;
+                    break;
                 default:
                     char const * msg = stepper;
                     throw std::invalid_argument(std::string("Parse Error at: ") + msg);
             }
-            // if(stepper[i] == '#'){
-            // if(*stepper == '#'){
-            // return;
-            // }else { // bash doesn't allow beginning and adjacent connectors
-            // char const * msg = stepper;
-            // throw std::invalid_argument(std::string("Parse Error at: ") + msg);
-            // }
         }
 
         if(*stepper == '\0'){ // connector at end
-            throw std::invalid_argument("Parse error: Currently no end-of-line connector supported.");
+            std::cout << "TEST" << *(stepper - 1) << std::endl;
+            switch(*(stepper - 1)){
+                case ')':
+                    parens--;
+                    return;
+                case ';':
+                    return;
+                default:
+                    throw std::invalid_argument("Parse error: Currently no end-of-line connector supported.");
+            }
         }
 
+
+
         i = strcspn(stepper, KEYS);
-        }
+        } // while loops end
 
         char commandLast[COMMAND_LENGTH];
         memcpy(commandLast, stepper, i);
         commandLast[i] = '\0';
+        // vector doesn't push back null
         runners.push_back(convertToCommand(commandLast));
     }
 
@@ -107,9 +113,10 @@ void Parser::parserInit(){
             return new OrConnector();
         } else if (strcmp(str, ";") == 0){
             return new SemicolonConnector();
-        } else if (strcmp(str, "(") == 0 || strcmp(str, ")")){ // # poundA
-            // return new OpenParenConnector();
-
+        } else if (strcmp(str, "(") == 0){ // # poundA
+            return new ParenthesisConnector(1);
+        } else if (strcmp(str, ")") == 0){ // # poundA
+            return new ParenthesisConnector(0);
         }
         printf("%s\n", "error");
         return NULL;

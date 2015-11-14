@@ -15,4 +15,11 @@ struct SemicolonConnector : public Connector {
     SemicolonConnector() : Connector((char*)";", true, true) {}
 };
 
+struct ParenthesisConnector: public Connector {
+    bool isOpen;
+    ParenthesisConnector(bool b) : isOpen(b){
+        b ? setKey((char*)"(") : setKey((char*)")");
+    }
+};
+
 #endif

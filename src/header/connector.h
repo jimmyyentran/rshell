@@ -12,7 +12,10 @@ class Connector : public Runner {
         bool ifReceiveTrue;
         bool ifReceiveFalse;
     public:
+        Connector(){};
+        Connector(char *);
         Connector(char *, bool, bool);
+        void setKey(char*);
         bool run(bool);
         void print();
         virtual ~Connector() = 0;

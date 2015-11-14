@@ -57,8 +57,9 @@ bool Command::run(bool b) {
 void Command::print(){
     char ** it = args;
     while (*it != NULL){
-        std::cout << *it++ << std::endl;
+        std::cout << *it++ << "*";
     }
+    std::cout << std::endl;
 }
 
 Command::~Command(){
