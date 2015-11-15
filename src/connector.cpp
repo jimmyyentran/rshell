@@ -16,6 +16,10 @@ void Connector::setKey(char* str){
     key = str;
 }
 
+char * Connector::getName(){
+    return key;
+}
+
 bool Connector::run(bool b){
     return b ? ifReceiveTrue : ifReceiveFalse;
 }

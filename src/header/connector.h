@@ -16,6 +16,7 @@ class Connector : public Runner {
         Connector(char *);
         Connector(char *, bool, bool);
         void setKey(char*);
+        char * getName();
         bool run(bool);
         void print();
         virtual ~Connector() = 0;

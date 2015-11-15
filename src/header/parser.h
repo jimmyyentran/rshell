@@ -16,12 +16,14 @@ class Parser {
         Command* convertToCommand(char*);
         Connector* convertToConnector(const char * str);
         std::vector<Runner*> runners;
+        bool runParenthesis(std::vector<Runner*>::iterator&, bool b);
     public:
         const static int COMMAND_LENGTH = 100;
         Parser(char * str);
         ~Parser();
         void test();
         void runRunners();
+        bool runRunners2();
         std::vector<Runner*>& getRunners();
         void parserInit();
 };

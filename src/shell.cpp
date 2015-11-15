@@ -64,7 +64,7 @@ void Shell::startShell(){
         if(shellType == boolTest){
             parser.test();
         } else {
-            parser.runRunners();
+            parser.runRunners2();
         }
     }
 }
