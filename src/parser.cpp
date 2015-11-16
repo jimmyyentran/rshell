@@ -110,7 +110,6 @@ printerr:
         throw std::invalid_argument("Parse error: Missing ')'");
     }
 
-
     if(lastPush){ // if last push was a command, quit
         throw std::invalid_argument(std::string("Parse Error at3: ") + stepper);
     }
@@ -172,7 +171,6 @@ bool Parser::runRunners2(){
         } else {
             if(strcmp((*it)->getName(),"(") == 0){
                 if(connectorVal){
-                    // std::cout << "FOUND PARENT" << std::endl;
                     commandVal = runParenthesis(it, true);
                     continue;
                 } else {
@@ -198,7 +196,6 @@ bool Parser::runParenthesis(std::vector<Runner*>::iterator & it, bool b){
         } else {
             if(strcmp((*it)->getName(),"(") == 0){
                 if(connectorVal){
-                    // std::cout << "FOUND PARENTHESIS" << std::endl;
                     commandVal = runParenthesis(it, true);
                     continue;
                 }else {

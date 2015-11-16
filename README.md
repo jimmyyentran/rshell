@@ -14,13 +14,33 @@ CS100 Programming assignment
 - Prompt
   - `jtran064@sandman$ `
 
+##Design
+###Parsing
+- Parser takes input from the user and encapsulates the characters into either
+command or connector objects. Both of these objects inherit from an abstract
+base class, Runners
+- If any errors are encountered, Parser will throw an exception that will bubble
+up to main and eventually output to the user
+- Runners are stored a vector of runner pointers
+
+###Execution
+- An iterator iterates through the vector of pointers and calls the object's run
+function
+- Upon encountering a parenthesis a separate function, runParenthesis, is
+called
+  - runParenthesis recursively calls on itself when it encounters another
+    parenthesis, allowing for nested parenthesis
+
+###Improvements
+- Instead of a vector, a tree container would be more intuitive and would simplify execution
+
 ##rshell arguments
 - `TEST` prints out the entered the command. Used mostly for script runs
 - `BOOLTEST` prints out parsed elements. Used for debugging
 
 ##Bugs
 ###rshell
-- Limitations to # input length, argument character length, and argument lenght
+- Limitations to # input length, argument character length, and argument length
 
 ###Makefile
 - Makefile is buggy. Need to clean and rebuild at every compilation
@@ -29,5 +49,5 @@ CS100 Programming assignment
 - Script doesn't output the user in prompt
 - Script tests loops infinitely on BOOLTEST mode
 - Executing rshell in rshell forks a child process instead of returning to
-  parent
+parent
 
