@@ -17,6 +17,7 @@ class Parser {
         Connector* convertToConnector(const char * str);
         std::vector<Runner*> runners;
         bool runParenthesis(std::vector<Runner*>::iterator&, bool b);
+        void checkParens(int);
     public:
         const static int COMMAND_LENGTH = 100;
         Parser(char * str);

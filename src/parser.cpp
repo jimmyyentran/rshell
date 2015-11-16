@@ -63,6 +63,7 @@ void Parser::parserInit(){
                     lastPush = 0;
                     break;
                 case '#':
+                    checkParens(parens);
                     return; // stop taking more inputs
                 case ')': // last push remains command
                     if(parens <= 0){
@@ -79,6 +80,7 @@ printerr:
         } else { //last push was a connector or beginning of input
             switch (*stepper){
                 case '#':
+                    checkParens(parens);
                     return;
                 case '(': //last push remains connector
                     runners.push_back(convertToConnector((char*)"("));
@@ -94,9 +96,7 @@ printerr:
         if(*stepper == '\0'){ // connector at end
             switch(*(stepper - 1)){
                 case ')':
-                    if(parens != 0){
-                        throw std::invalid_argument("Parse error: Missing ')'");
-                    }
+                    checkParens(parens);
                     return;
                 case ';':
                     return;
@@ -107,9 +107,7 @@ printerr:
         i = strcspn(stepper, KEYS);
     } // while loops end
 
-    if(parens != 0){
-        throw std::invalid_argument("Parse error: Missing ')'");
-    }
+    checkParens(parens);
 
     if(lastPush){ // if last push was a command, quit
         throw std::invalid_argument(std::string("Parse Error at3: ") + stepper);
@@ -119,6 +117,10 @@ printerr:
     commandLast[i] = '\0';
     // vector doesn't push back NULL
     runners.push_back(convertToCommand(commandLast));
+}
+
+void Parser::checkParens(const int i){
+    i ? throw std::invalid_argument("Parse error: Missing ')'") : 1;
 }
 
 Connector* Parser::convertToConnector(const char * str){

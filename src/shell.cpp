@@ -31,6 +31,7 @@ void Shell::getLoginInfo(){
 }
 
 void Shell::printPrompt(){
+    // make bold red
     std::cout << "\033[1;31m" << username << "@" << hostname << "$\033[0m ";
 }
 
