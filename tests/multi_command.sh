@@ -23,12 +23,4 @@ echo "------------------"
     echo "ls&&|" #fix
     echo "ls && || ls" #fix
     echo "exit"
-} | $EXECUTABLE $1| cat
-
-# input () {
-    # $EXECUTABLE << EOF
-# $1
-# EOF
-# echo
-# }
-
+} | $EXECUTABLE $1

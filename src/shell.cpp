@@ -31,7 +31,7 @@ void Shell::getLoginInfo(){
 }
 
 void Shell::printPrompt(){
-    std::cout << username << "@" << hostname << "$ ";
+    std::cout << "\033[1;31m" << username << "@" << hostname << "$\033[0m ";
 }
 
 void Shell::startShell(){

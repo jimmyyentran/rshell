@@ -15,4 +15,4 @@ echo "------------------"
     echo "lscpu "
     echo "exit"
 
-} | $EXECUTABLE $1| cat
+} | $EXECUTABLE $1

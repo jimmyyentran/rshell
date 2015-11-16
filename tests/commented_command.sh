@@ -14,4 +14,4 @@ echo "------------------"
     echo "ls#"
     echo "ls -a#"
     echo "exit"
-} | $EXECUTABLE $1| cat
+} | $EXECUTABLE $1

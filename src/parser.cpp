@@ -6,9 +6,10 @@
 #include "header/connectorClasses.h"
 #include "header/parser.h"
 
-const char Parser::KEYS[] = "&|;#()";
+const char Parser::KEYS[] = "&|;#()[]";
 
 Parser::Parser(char * str){
+    // std::cout << "\033[1;31mbold red text\033[0m\n";
     strncpy(cmd, str, Shell::MAX_INPUT2);
 }
 
