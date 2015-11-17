@@ -4,13 +4,14 @@
 #include "runner.h"
 
 class Command : public Runner{
-    private:
+    protected:
         char * args[30];
     public:
         Command(char ** cmd);
         ~Command();
         bool run(bool);
         void print();
+        bool runTest();
 };
 
 #endif

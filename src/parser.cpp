@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <stdexcept>
 #include "header/connectorClasses.h"
+#include "header/commandClasses.h"
 #include "header/parser.h"
 
 const char Parser::KEYS[] = "&|;#()[]";
@@ -223,9 +224,11 @@ Command* Parser::convertToCommand(char * str){
     parseArgs(*argv, argv);
     if(*argv == '\0'){
         return NULL;
+    }else if (strcmp(*argv, "test") == 0){
+        return new TestCommand(argv);
+    }else {
+        return new Command(argv);
     }
-
-    return new Command(argv);
 }
 
 // Doesn't take in spaces at beginning

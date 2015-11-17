@@ -38,6 +38,7 @@ bool Command::run(bool b) {
                 perror("Can't execute");
                 exit(1);
             }
+            exit(0);
         }else{ // parent process
             wait(&status);
             if (WIFEXITED(status)){
