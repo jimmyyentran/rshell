@@ -239,6 +239,35 @@ bool Parser::runParenthesis(std::vector<Runner*>::iterator & it, bool b){
     return commandVal;
 }
 
+bool Parser::runBrackets(std::vector<Runner*>::iterator & it, bool b){
+    bool commandVal= true;
+    bool connectorVal = b;
+    ++it;
+    for(; strcmp((*it)->getName(),"]") != 0; ++it){
+        if(dynamic_cast<Command*>(*it)){
+            if(connectorVal){
+                commandVal = (*it)->run(connectorVal);
+            }
+        } else {
+            if(strcmp((*it)->getName(),"[") == 0){
+                if(connectorVal){
+                    commandVal = runParenthesis(it, true);
+                    continue;
+                }else {
+                    runParenthesis(it, false);
+                    continue;
+                }
+            }
+            if(b){
+                connectorVal = (*it)->run(commandVal);
+            }
+        }
+    }
+    // commandVal ? std::cout << "TRUE" : std::cout << "FALSE";
+    // std::cout << std::endl;
+    return commandVal;
+}
+
 // converts string to a command unless the string is empty return NULL
 Command* Parser::convertToCommand(char * str){
     char * argv[30];

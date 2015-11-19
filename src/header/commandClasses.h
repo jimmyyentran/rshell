@@ -50,9 +50,8 @@ class TestCommand : public Command{
                     struct stat file_info;
                     if(*stepper){
                         if(stat(*stepper, &file_info) == -1){
-                            // return false;
-                            // perror("stat");
-                            exit(0);
+                            perror("stat");
+                            exit(0); //failed to find file
                         }
                     }else {
                         std::cerr << "No file to test" << std::endl;

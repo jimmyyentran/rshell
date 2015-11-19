@@ -10,5 +10,7 @@ echo "------------------"
     echo "[ -e /bin ]] && echo 1"
     echo "[[ -e /bin ]] && echo 1"
     echo "[[ -e /bin ] && echo 1"
+    echo "[ -e /bin  && ;echo 1"
+    echo "[] && echo 1"
     echo "exit"
 } | $EXECUTABLE $1
