@@ -88,6 +88,9 @@ printerr:
                     parens++;
                     stepper++;
                     break;
+                case '[':
+
+                    break;
                 default:
                     // char const * msg = stepper;
                     throw std::invalid_argument(std::string("Parse Error at: ") + stepper);

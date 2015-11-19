@@ -16,17 +16,21 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # all: clean $(OBJ)
-all: $(OBJ)
+all: directories $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(OBJDIR)/$(EXECUTABLE)
 
-$(OBJ): | $(OBJDIR)
+# $(OBJ): | $(OBJDIR)
+directories: $(OBJDIR)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
 
 # Test only runs the first file..(all.sh)
 test: $(TEST)
-	@./$<
+	@./$< TEST
+
+testParse: $(TEST)
+	@./$< BOOLTEST
 
 # compile and test
 ct: all test

@@ -22,4 +22,10 @@ struct ParenthesisConnector: public Connector {
     }
 };
 
+struct BracketConnector: public Connector {
+    BracketConnector(bool b){
+        b ? setKey((char*)"[") : setKey((char*)"]");
+    }
+};
+
 #endif

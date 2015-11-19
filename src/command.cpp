@@ -57,6 +57,9 @@ bool Command::run(bool b) {
 
 void Command::print(){
     char ** it = args;
+    if(strcmp(*it, "exit") == 0){
+        exit(0);
+    }
     while (*it != NULL){
         std::cout << *it++ << "*";
     }
