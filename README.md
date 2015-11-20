@@ -50,6 +50,9 @@ called
 - Brackets
   - Double brackets are not supported
   - Empty arguments are treated as errors
+- Stat function looks through top level heirarchy so `/bin` exists even though
+  it does not exist in the current directory. This is true for all directories
+  that matches top level heirarchy names.
 
 ###Makefile
 - Makefile is buggy. Need to clean and rebuild at every compilation
