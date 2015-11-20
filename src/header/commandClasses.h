@@ -59,7 +59,8 @@ class TestCommand : public Command{
                     struct stat file_info;
                     if(*stepper){
                         if(stat(*stepper, &file_info) == -1){
-                            perror("stat");
+                            // stat() failed, but do no report
+                            //perror("stat");
                             exit(0); //failed to find file
                         }
                     }else {
