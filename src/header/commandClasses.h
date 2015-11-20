@@ -30,18 +30,23 @@ class TestCommand : public Command{
 
                     if(*stepper){
                         if(**(stepper) == '-'){
-                            switch ( (*stepper)[1] ){
-                                case 'e':
-                                    break;
-                                case 'f':
-                                    type = 'f';
-                                    break;
-                                case 'd':
-                                    type = 'd';
-                                    break;
-                                default:
-                                    std::cerr << "Flag not supported" << std::endl;
-                                    exit(2);
+                            if( (*stepper)[2] ){
+                               std::cerr << "Flag not supported" << std::endl;
+                               exit(2);
+
+                            }else {
+                               switch ( (*stepper)[1] ){
+                                   case 'e':
+                                       break;
+                                   case 'f':
+                                       type = 'f';
+                                       break;
+                                   case 'd':
+                                       type = 'd';
+                                       break;
+                                   default:
+                                       std::cerr << "Flag not supported" << std::endl;
+                                       exit(2);
                             }
                             ++stepper;
                         }
