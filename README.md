@@ -1,7 +1,7 @@
 # rshell
-CS100 Programming assignment
-Jimmy Tran
-Erin Mullally
+- CS100 Programming assignment
+- Jimmy Tran
+- Erin Mullally
 
 ##Functions
 - Chained commands with or without space:
