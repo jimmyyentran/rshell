@@ -290,6 +290,8 @@ Command* Parser::convertToCommand(char * str){
         return NULL;
     }else if (strcmp(*argv, "test*") == 0){
         return new TestCommand(argv, 1);
+    }else if (strcmp(*argv, "test") == 0){
+        return new TestCommand(argv);
     }else {
         return new Command(argv);
     }
