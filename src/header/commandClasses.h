@@ -47,9 +47,10 @@ class TestCommand : public Command{
                                    default:
                                        std::cerr << "Flag not supported" << std::endl;
                                        exit(2);
-                            }
+                               }
                             ++stepper;
-                        }
+                            }
+                       }
                     }else {
                         std::cerr << "No file to test" << std::endl;
                         exit(2);
