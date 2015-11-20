@@ -29,5 +29,6 @@ echo "------------------"
     echo "test -e bin || ([ -f bin ] || pwd )"
     echo "test -e bin || ([ -f bin || pwd )"
     echo "test -d ../tests && ([ -f bin || pwd )"
+    echo "test -d ../tests && ([ -f all.sh || pwd )"
     echo "exit"
 } | $EXECUTABLE $1
