@@ -62,13 +62,18 @@ class TestCommand : public Command{
                     }
 
                     if(*(++stepper)){
-                        if(strcmp(*stepper, "]") != 0){
+                        if(isBracket){
+                            if(strcmp(*stepper, "]") != 0){
+                                std::cerr << "Too many args" << std::endl;
+                                exit(2);
+                            }else {
+                                std::cerr << "No ']' found" << std::endl;
+                                exit(2);
+                            }
+                        }else {
                             std::cerr << "Too many args" << std::endl;
                             exit(2);
                         }
-                    } else {
-                        std::cerr << "No ']' found" << std::endl;
-                        exit(2);
                     }
 
                     switch(type){
