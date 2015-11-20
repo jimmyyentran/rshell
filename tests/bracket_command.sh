@@ -23,4 +23,4 @@ echo "------------------"
     echo "[[ -e /bin ; echo 1"
     echo "[] && echo 1"
     echo "exit"
-} | tee >($EXECUTABLE $1)
+} | $EXECUTABLE $1
