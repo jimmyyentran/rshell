@@ -75,6 +75,7 @@ void Parser::parserInit(){
                     parens--;
                     break;
                 case ']': // last push remains command
+                    throw std::invalid_argument("Parse Error: Expected '['");
                     // if(brackets <= 0){
                     // goto printerr;
                     // }
@@ -102,7 +103,7 @@ printerr:
                         if(stepper[j] == ']'){
                             j++;
                         }
-                        char test[COMMAND_LENGTH] = "test";
+                        char test[COMMAND_LENGTH] = "test*";
                         char commandTest[COMMAND_LENGTH];
                         memcpy(commandTest, stepper, j);
                         commandTest[j] = '\0';
@@ -287,8 +288,8 @@ Command* Parser::convertToCommand(char * str){
     parseArgs(*argv, argv);
     if(*argv == '\0'){
         return NULL;
-    }else if (strcmp(*argv, "test") == 0){
-        return new TestCommand(argv);
+    }else if (strcmp(*argv, "test*") == 0){
+        return new TestCommand(argv, 1);
     }else {
         return new Command(argv);
     }

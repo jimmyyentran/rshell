@@ -67,14 +67,20 @@ class TestCommand : public Command{
                                 std::cerr << "Too many args" << std::endl;
                                 exit(2);
                             }else {
-                                std::cerr << "No ']' found" << std::endl;
-                                exit(2);
+                                // std::cerr << "No ']' found" << std::endl;
+                                // exit(2);
                             }
                         }else {
-                            std::cerr << "Too many args" << std::endl;
+                            std::cerr << "Too many arguments" << std::endl;
+                            exit(2);
+                        }
+                    }else {
+                        if(isBracket){
+                            std::cerr << "No ']' found" << std::endl;
                             exit(2);
                         }
                     }
+
 
                     switch(type){
                         case 'e':
