@@ -19,8 +19,8 @@ all: clean $(OBJ)
 # all: directories $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(OBJDIR)/$(EXECUTABLE)
 
-# $(OBJ): | $(OBJDIR)
-directories: $(OBJDIR)
+$(OBJ): | $(OBJDIR)
+# directories: $(OBJDIR)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
