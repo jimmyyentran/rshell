@@ -26,6 +26,8 @@ base class, Runners
 - If any errors are encountered, Parser will throw an exception that will bubble
 up to main and eventually output to the user
 - Runners are stored a vector of runner pointers
+- All parse errors are thrown before execution. This may differ from bash which
+  sometimes throw parse errors after execution.
 
 ###Execution
 - An iterator iterates through the vector of pointers and calls the object's run
@@ -50,9 +52,6 @@ called
 - Brackets
   - Double brackets are not supported
   - Empty arguments are treated as errors
-- Stat function looks through top level heirarchy so `/bin` exists even though
-  it does not exist in the current directory. This is true for all directories
-  that matches top level heirarchy names.
 
 ###Makefile
 - Makefile is buggy. Need to clean and rebuild at every compilation
