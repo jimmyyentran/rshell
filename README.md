@@ -8,6 +8,10 @@ CS100 Programming assignment
 - Throw parse errors if start or end with connectors
   - `$ &&top`
   - `$ lscpu||`
+- Precedence using parenthesis
+  - `$ (echo 1 || echo 2) && (echo 3 && echo 4)`
+- Brackets for "test" command
+  - `$ [ -d /bin ] && echo directory exists` 
 - Error if there are adjacent connectors
   - `who || && whoami`
   - `who ;$$ whoami`
@@ -30,8 +34,10 @@ function
 called
   - runParenthesis recursively calls on itself when it encounters another
     parenthesis, allowing for nested parenthesis
+- Open brackets are converted to a "test" command and will search for the closing bracket
+  - If there are any connector before the closing bracket, an exception would throw
 
-###Improvements
+###Possible Improvements
 - Instead of a vector, a tree container would be more intuitive and would simplify execution
 
 ##rshell arguments
@@ -41,6 +47,9 @@ called
 ##Bugs
 ###rshell
 - Limitations to # input length, argument character length, and argument length
+- Brackets
+  - Double brackets are not supported
+  - Empty arguments are treated as errors
 
 ###Makefile
 - Makefile is buggy. Need to clean and rebuild at every compilation
