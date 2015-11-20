@@ -12,8 +12,11 @@
 #include "command.h"
 
 class TestCommand : public Command{
+    private:
+        bool isBracket;
     public:
-        TestCommand(char ** cmd):Command(cmd){}
+        TestCommand(char ** cmd):Command(cmd), isBracket(false){}
+        TestCommand(char ** cmd, bool b):Command(cmd), isBracket(b){}
 
         bool run(bool b){
             pid_t child_pid = fork();
@@ -55,6 +58,16 @@ class TestCommand : public Command{
                         }
                     }else {
                         std::cerr << "No file to test" << std::endl;
+                        exit(2);
+                    }
+
+                    if(*(++stepper)){
+                        if(strcmp(*stepper, "]") != 0){
+                            std::cerr << "Too many args" << std::endl;
+                            exit(2);
+                        }
+                    } else {
+                        std::cerr << "No ']' found" << std::endl;
                         exit(2);
                     }
 

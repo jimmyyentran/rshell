@@ -75,11 +75,11 @@ void Parser::parserInit(){
                     parens--;
                     break;
                 case ']': // last push remains command
-                    if(brackets <= 0){
-                        goto printerr;
-                    }
-                    runners.push_back(convertToConnector((char*)"]"));
-                    brackets--;
+                    // if(brackets <= 0){
+                    // goto printerr;
+                    // }
+                    // runners.push_back(convertToConnector((char*)"]"));
+                    // brackets--;
                     break;
 printerr:
                 default:
@@ -97,9 +97,21 @@ printerr:
                     stepper++;
                     break;
                 case '[':
-                    runners.push_back(convertToConnector((char*)"["));
-                    brackets++;
-                    stepper++;
+                    { // create new scope
+                        size_t j = strcspn(++stepper, KEYS);
+                        if(stepper[j] == ']'){
+                            j++;
+                        }
+                        char test[COMMAND_LENGTH] = "test";
+                        char commandTest[COMMAND_LENGTH];
+                        memcpy(commandTest, stepper, j);
+                        commandTest[j] = '\0';
+                        strcat(test, commandTest);
+                        runners.push_back(convertToCommand(test));
+                        stepper = &(stepper[j]);
+                        lastPush = 1;
+                        // brackets++;
+                    }
                     break;
                 default:
                     // char const * msg = stepper;
