@@ -264,10 +264,10 @@ bool Parser::runBrackets(std::vector<Runner*>::iterator & it, bool b){
         } else {
             if(strcmp((*it)->getName(),"[") == 0){
                 if(connectorVal){
-                    commandVal = runParenthesis(it, true);
+                    commandVal = runBrackets(it, true);
                     continue;
                 }else {
-                    runParenthesis(it, false);
+                    runBrackets(it, false);
                     continue;
                 }
             }
